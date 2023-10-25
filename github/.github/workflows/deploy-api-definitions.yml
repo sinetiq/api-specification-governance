@@ -1,0 +1,21 @@
+name: Deploy API definitions
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      # Push all service types matching --glob
+      - name: Push API definitions to registry
+        run: npm_config_registry=https://npm.sinetiq.net npx @sinetiq/service-type-registry-cli --glob **/service-type.json --ignore-already-registered
