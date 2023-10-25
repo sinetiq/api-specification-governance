@@ -1,0 +1,8 @@
+{
+  "group": "se.sinetiq.example",
+  "artifact": "bitbucket-temperature-sensor-rest-json",
+  "version": "1.0.1",
+  "specification": {
+    "openApi": "./openapi.yml"
+  }
+}
