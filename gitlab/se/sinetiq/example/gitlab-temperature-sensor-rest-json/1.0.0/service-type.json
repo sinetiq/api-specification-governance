@@ -1,0 +1,8 @@
+{
+  "group": "se.sinetiq.example",
+  "artifact": "gitlab-temperature-sensor-rest-json",
+  "version": "1.0.0",
+  "specification": {
+    "openApi": "./openapi.yml"
+  }
+}
