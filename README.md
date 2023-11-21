@@ -21,4 +21,4 @@ See the [Hacking Guide](./README-build-run.md) for details about modifying the e
 
 ## Reach out
 
-See [our website](to-be) for details on how to reach us, report an bug, request a feature, etc.
+Please reach out by contact us throught email [Contact Us](mailto:info@sinetiq.se) for details, discussion, report an bug, request a feature, schedule a demonstration, etc.
