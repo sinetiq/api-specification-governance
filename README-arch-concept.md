@@ -1,3 +1,5 @@
+# The architecture and concept
+
 ## Story
 
 Companies and organisations is facing rapidly demands and competitiveness challenges on their information systems (applications).
@@ -17,23 +19,8 @@ There is a need to have common rules, principles, use of standards, methods and 
 
 ## Benefits
 
-FLEXIBILITY Adjustable due to demand
-- Meet new requirements
-- Right information at right time for correct decision
-
-AGILE Reduce development TIME
-- Faster and easier to do integrations and development
-- Integrations in focus
-
-REUSE Increase collaboration and interoperability
-- Enable high level of information exchange
-- Enable seamless collaboration and IT composition
-- Focus in return of investments (ROI)
-
-DISCIPLINE Future proof architecture and solutions
-- Evolve controlled with a know strategy
-- Decrease dependencies
-- Legacy (OT) with  new/future (IT) systems
+The SIT Core features and benefits to govern and emphasis API specifications enables following characteristics. The areas with strongest impact are flexibility, agile, reuse and disciplin
+![Features](./docs/img/SITCore-features.png "Features")
 
 
 ## Extensive experience and knowledge
@@ -67,6 +54,8 @@ Because the architecture is naturally federative, you can decide how much resour
 
 In addition, participants can choose which parts of a federal system solution that fits the individual needs.
 
+![SOA](./docs/img/SITCore-soa.png "SOA")
+
 ## Concept
 
 Sinetiq core helps us with our complex integrations, ensures controlled flexibility in an ever-changing IT environment.
@@ -87,3 +76,5 @@ The demonstration covers:
 - Software development and/or compliance test process
 - Approval and deployment process
 - Operational and management process
+
+![Processes](./docs/img/SITCore-processes.png "Processes")
