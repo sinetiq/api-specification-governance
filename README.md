@@ -1,4 +1,4 @@
-# Welcome to SINETIQ Core - API specification governance
+# Welcome to SINETIQ Core <span style="font-size:16px;">- API specification governance</span>
 
 **This repository is a demonstration of how the SINETIQ Core could be integrated and function within an organization to successful handle governance of API specifications in the complete life cycle chain.**
 
@@ -17,7 +17,7 @@ todo: pipelines, provider + consumer, example-yaml
 
 ## How to Build, etc.
 
-See the [Hacking Guide](./README-build-run.md) for details about modifying the example code, build, test, IDE integration, etc.
+See the [Cookbook Guide](./README-build-run.md) for details about modifying the example code, build, test, IDE integration, etc.
 
 ## Reach out
 
