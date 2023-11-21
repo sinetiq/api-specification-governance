@@ -36,14 +36,6 @@ The approach to solve those challenges is to construct and manage a common under
 
 There is a need to have common rules, principles, use of standards, methods and more to achieve successful interoperability between the applications and enable the possibility to achieve collaborative automation.
 
-### Extensive experience and knowledge
-
-- Achieving faster results through reuse: 240 hours done in 80!
-- 20% cost reduction yearly for complex maintenance and changes!
-- Improving delivery precision, reducing complexity, and enhancing IT system quality by a factor of 4!
-- Align suppliers with existing integrations reduces allocation and decreases product team involvement by 80%, resulting in annual savings of 1,000,000 SEK!
-- Incorporating methods and best practices from reference projects since 2003, supported by a 5 billion SEK investment in R&D!
-
 ### Architecture
 
 SERVICE ORIENTED BASED system solutions have decoupled life cycles for each of the components.
@@ -59,7 +51,6 @@ With interoperable system solutions, participants can choose which rate to adapt
 Because the architecture is naturally federative, you can decide how much resources and at what rate you should be interoperable.
 
 In addition, participants can choose which parts of a federal system solution that fits the individual needs.
-
 
 ### Benefits
 
@@ -80,28 +71,3 @@ DISCIPLINE Future proof architecture and solutions
 - Evolve controlled with a know strategy
 - Decrease dependencies
 - Legacy (OT) with  new/future (IT) systems
-
-
-### Our unique approach
-
-We use API specifications as the controlling tool. Each API specification consist of a unique api identifier, within the yaml-specifications we use x-api-identification and mark each api spec. The API specification is completely loosely coupled, no instances or deployment information. The API specification only mange the service as unique information object, ie. not system-api. Each API specification is implemented by one or more Providers and/or Consumers.
-
-In runtime, each Provider publish and set its prescense within the Service Registry, we use Consule in our example but have also used Bind as a strong solution. The registration is the x-api-identifier value together wieh the specific instance endpoint, complete to establish a connection link for exchange information between consumer(s) and provider(s). The consumer(s) search(discover) wanted information sources (providers) by use the x-api-identifier and fetch the matching instances endpoints.
-
-## Demonstration Setup
-
-The environment for this demonstration is managed through a client computer with specific components downloaded:
-- **CLI Component**: Deploy approved API specifications to the API specification repository.
-- **Pipeline**: Download and use the pipeline for your environment, example Azure, Bitbucket, Github and Jenkins.
-- **Service Explorer**: Explore approved API specifications and active API instances within the service registry.
-- **API specification repository**: Download and deploy docker container for the API specification repository.
-- **Service Registry (Consul from Hashicorp)**: Map API specifications and endpoints for establishing connections.
-
-![Demo setup](demo-image "Demo setup")
-
-## References
-
-- [SINETIQ Core](#link-to-github)
-- [API Specification Registry](#link-to-github)
-- [API Specification Publication CLI](#link-to-github)
-- [SINETIQ Core Service Explorer](#link-to-vscode-marketplace)

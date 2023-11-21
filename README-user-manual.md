@@ -27,4 +27,3 @@ _Your demonstration environment is now ready._
 - **Application Development**: Develop applications, both producers and consumers, that comply with the API specification. Producers should publish endpoints with the unique API identifier, and consumers should discover and connect to producers using the same identifier.
 - **Deployment**: Launch your application components.
 - **Verification with Service Explorer**: Utilize Visual Studio Code and the Service Explorer to list, verify, and test the existing producers and their API instances.
-
