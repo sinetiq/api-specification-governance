@@ -7,21 +7,7 @@ It provides a comprehensive showcase of the SINETIQ Core methodology, focusing o
 
 ## The architecture and concept
 
-See the [Architecture & concept Guide](./README-arch-concept.md) for information about the architectural and conceptual aspects within SINETIQ Core.
-
-### Extensive experience and knowledge
-
-- Achieving faster results through reuse: 240 hours done in 80!
-- 20% cost reduction yearly for complex maintenance and changes!
-- Improving delivery precision, reducing complexity, and enhancing IT system quality by a factor of 4!
-- Align suppliers with existing integrations reduces allocation and decreases product team involvement by 80%, resulting in annual savings of 1,000,000 SEK!
-- Incorporating methods and best practices from reference projects since 2003, supported by a 5 billion SEK investment in R&D!
-
-### Our unique approach
-
-We use API specifications as the controlling tool. Each API specification consist of a unique api identifier, within the yaml-specifications we use x-api-identification and mark each api spec. The API specification is completely loosely coupled, no instances or deployment information. The API specification only mange the service as unique information object, ie. not system-api. Each API specification is implemented by one or more Providers and/or Consumers.
-
-In runtime, each Provider publish and set its prescense within the Service Registry, we use Consule in our example but have also used Bind as a strong solution. The registration is the x-api-identifier value together wieh the specific instance endpoint, complete to establish a connection link for exchange information between consumer(s) and provider(s). The consumer(s) search(discover) wanted information sources (providers) by use the x-api-identifier and fetch the matching instances endpoints.
+See the [Architecture & concept Guide](./README-arch-concept.md) for information about the architectural and conceptual aspects within SINETIQ Core, its *unique approach* and extensive experience and knowledge.
 
 ## Getting Started
 
