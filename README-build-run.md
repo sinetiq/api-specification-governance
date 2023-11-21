@@ -1,4 +1,4 @@
-## Installation Steps
+## Installation and configuration
 
 1. **Download CLI**: Obtain from `sinetiq.se/link`. Configure the CLI for your GIT repository containing API specifications (YAML files).
 2. **Visual Code Setup**: Download and configure Visual Studio Code as your demonstration editor. Install the SINETIQ Core Service Explorer plugin from the Visual Studio Code marketplace.
@@ -6,10 +6,9 @@
 
    `> docker run consul`
 
-
 _Your demonstration environment is now ready._
 
-## Usage
+## Run
 
 - **Create API Specification**: Use your preferred editor to create a YAML file for the API specification and store it in your CLI-connected repository. Ensure each specification has an API identifier (`x-api-identifier`) and a unique name.
 - **Publish API Specification**: Utilize the approval CLI to publish your API specification to the repository.
