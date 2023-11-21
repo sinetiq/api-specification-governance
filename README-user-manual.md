@@ -7,7 +7,7 @@ The environment for this demonstration is managed through a client computer with
 - **API specification repository**: Download and deploy docker container for the API specification repository.
 - **Service Registry (Consul from Hashicorp)**: Map API specifications and endpoints for establishing connections.
 
-![Demo setup](demo-image "Demo setup")
+![Demo setup](./docs/img/SITCore-processes.png "Demo setup")
 
 ## Installation Steps
 
