@@ -1,8 +1,8 @@
-# Welcome to SINETIQ Core <span style="font-size:16px;">- API specification governance</span>
+# Welcome to SINETIQ Core
 
-**This repository is a demonstration of how the SINETIQ Core could be integrated and function within an organization to successful handle governance of API specifications in the complete life cycle chain.**
+**This repository is a demonstration of how the SINETIQ Core could be integrated and function within an organization to successful handle `governance of API specifications` in the complete life cycle chain.**
 
-It provides a comprehensive showcase of the SINETIQ Core methodology, focusing on application in an organizational setting for discussion, decision-making, and potential adoption.
+It provides a comprehensive showcase of the offer SINETIQ Core methodology, focusing on application in an organizational setting for discussion, decision-making, and potential adoption.
 
 
 ## The architecture and concept
@@ -23,10 +23,3 @@ See the [Cookbook Guide](./README-build-run.md) for details about modifying the 
 ## Reach out
 
 Please reach out by contact us throught email [Contact Us](mailto:info@sinetiq.se) for details, discussion, report an bug, request a feature, schedule a demonstration, etc.
-
-## Reference components
-
-- [SINETIQ Core](#link-to-github)
-- [API Specification Registry](#link-to-github)
-- [API Specification Publication CLI](#link-to-github)
-- [SINETIQ Core Service Explorer](#link-to-vscode-marketplace)
