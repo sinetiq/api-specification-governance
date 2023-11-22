@@ -8,5 +8,5 @@ pool:
 
 steps:
   # Push all service types matching --glob
-  - script: npm_config_registry=https://npm.sinetiq.net npx @sinetiq/api-specification-registry-cli --glob **/service-type.json --ignore-already-registered
+  - script: npx @sinetiq/api-specification-registry-cli --glob **/service-type.json --ignore-already-registered
     displayName: 'Register service types using sinetiq/api-specification-registry-cli'
