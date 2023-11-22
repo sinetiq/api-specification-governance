@@ -37,6 +37,12 @@ services:
 
   temp-provider:
     environment:
-      - CFG_SR_HOST=api-specification-registry
+      - CFG_SR_HOST=consul
       - CFG_SR_PORT=8500
     build: sinetiq-core-application-temperature-provider/
+
+  temp-consumer:
+    environment:
+      - CFG_SR_HOST=consul
+      - CFG_SR_PORT=8500
+    build: sinetiq-core-application-temperature-consumer/
