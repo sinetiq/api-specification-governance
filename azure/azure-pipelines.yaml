@@ -1,0 +1,12 @@
+# Controls when the workflow will run
+trigger:
+  - main
+
+# The type of runner that the job will run on
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  # Push all service types matching --glob
+  - script: npx @sinetiq/api-specification-registry-cli --glob **/service-type.json --ignore-already-registered
+    displayName: 'Register service types using sinetiq/api-specification-registry-cli'

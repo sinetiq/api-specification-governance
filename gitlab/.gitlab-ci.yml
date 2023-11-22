@@ -2,5 +2,5 @@ image: node:latest
 
 deploy:
   stage: deploy
-  script: npm_config_registry=https://npm.sinetiq.net npx @sinetiq/service-type-registry-cli --glob **/service-type.json --ignore-already-registered
+  script: npx @sinetiq/api-specification-registry-cli --glob **/api-specification.json --ignore-already-registered
   environment: production
