@@ -1,0 +1,8 @@
+{
+  "group": "se.sinetiq.example",
+  "artifact": "jenkins-temperature-sensor-rest-json",
+  "version": "1.0.3",
+  "specification": {
+    "openApi": "./openapi.yml"
+  }
+}
