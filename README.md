@@ -6,17 +6,17 @@ It provides a comprehensive showcase of the offer SINETIQ Core methodology, focu
 
 ## The architecture and concept
 
-See the [Architecture & Concept Guide](./README-arch-concept.md) for information about the architectural and conceptual aspects within SINETIQ Core, its *unique approach* and extensive experience and knowledge.
+See the [Architecture & Concept Guide](./docs/README-architecture-concept.md) for information about the architectural and conceptual aspects within SINETIQ Core, its *unique approach* and extensive experience and knowledge.
 
 ## Getting Started
 
-See the [User Manual](./README-user-manual.md) for an in-depth explanation of all aspects of demo regarding installation, configuration and behavior.
+See the [Installation Manual](./docs/README-install-configure-run.md) for an in-depth explanation of all aspects of demo regarding installation, configuration and behavior.
 
 The demonstration ships with `examples` which you can run, inspect & modify.
 
 ## How to Build, etc.
 
-See the [Cookbook Guide](./README-build-run.md) for details about modifying the example code, build, test, run etc.
+See the [User Manual](./docs/README-user-manual.md) for details about modifying the example code, build, test, run etc.
 
 ## Reach out
 
