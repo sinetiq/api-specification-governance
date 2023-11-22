@@ -7,7 +7,7 @@ The environment for this demonstration is managed through a client computer with
 - **API specification repository**: Download and deploy docker container for the API specification repository. The Sinetiq Service Type Registry consist of published and approved api specification, mapping the identifier. TODO: describe domain/group.
 - **Service Registry (Consul from Hashicorp)**: Map API specifications and endpoints for establishing connections. 
 
-<img src="./docs/img/SITCore-processes.png" width="600">
+<img src="./img/SITCore-processes.png" width="600">
 
 ## Installation Steps
 
@@ -22,7 +22,7 @@ Use built in extension in vscode or at the command line, find the sinetiq.serivc
 
 1. **Registry services**: Download and start docker-compose file to start the API specification registry and Service Registry. The Sinetiq API specification registry consist of published and approved api specification, mapping the identifier. TODO: describe domain/group. The Service Registry consist of the api instances, endpoints mapped with their unique identifiers.
 
-   [Download Docker compose file](./docker-compose.yml)
+   [Download Docker compose file](../docker-compose.yml)
 
    `> docker compose up` 
 
@@ -42,7 +42,7 @@ _Your demonstration environment is now ready._
 
 - **Verification with Service Explorer**: Utilize Visual Studio Code and the Service Explorer to list, verify, and test the existing producers and their API instances.
   
-  ![Service explorer](./docs/media/preview.gif)
+  ![Service explorer](./media/preview.gif)
 
 ## Reference components
 

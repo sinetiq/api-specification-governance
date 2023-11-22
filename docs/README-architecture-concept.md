@@ -21,7 +21,7 @@ There is a need to have common rules, principles, use of standards, methods and 
 
 The SIT Core features and benefits to govern and emphasis API specifications enables following characteristics. The areas with strongest impact are flexibility, agile, reuse and disciplin.
 
-<img src="./docs/img/SITCore-features.png" width="400">
+<img src="./img/SITCore-features.png" width="400">
 
 
 ## Extensive experience and knowledge
@@ -55,7 +55,7 @@ Because the architecture is naturally federative, you can decide how much resour
 
 In addition, participants can choose which parts of a federal system solution that fits the individual needs.
 
-<img src="./docs/img/SITCore-soa.png" width="800">
+<img src="./img/SITCore-soa.png" width="800">
 
 ## Concept
 
@@ -78,4 +78,4 @@ The demonstration covers:
 - Approval and deployment process
 - Operational and management process
 - 
-<img src="./docs/img/SITCore-processes.png" width="600">
+<img src="./img/SITCore-processes.png" width="600">
