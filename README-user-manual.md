@@ -11,7 +11,7 @@ The environment for this demonstration is managed through a client computer with
 
 ## Installation Steps
 
-1. **Download CLI component api-specification-registry-cli**: Obtain from `https://www.npmjs.com/package/@sinetiq/api-specification-registry-cli`. Configure the CLI for your GIT repository containing API specifications (YAML files).
+1. **Download CLI component api-specification-registry-cli**: Obtain from [https://www.npmjs.com/package/@sinetiq/api-specification-registry-cli](https://www.npmjs.com/package/@sinetiq/api-specification-registry-cli). Configure the CLI for your GIT repository containing API specifications (YAML files).
    
    `> npm i @sinetiq/api-specification-registry-cli`
 
@@ -20,27 +20,26 @@ Use built in extension in vscode or at the command line, find the sinetiq.serivc
 
    `> code --install-extension sinetiq.service-explorer`
 
-- **API specification repository**: Download and deploy docker container for the API specification repository. The Sinetiq Service Type Registry consist of published and approved api specification, mapping the identifier. TODO: describe domain/group.
+1. **Registry services**: Download and start docker-compose file to start the API specification registry and Service Registry. The Sinetiq API specification registry consist of published and approved api specification, mapping the identifier. TODO: describe domain/group. The Service Registry consist of the api instances, endpoints mapped with their unique identifiers.
 
-   `> docker pull sinetiq/api-specification-registry`
-   `> docker compose up` todo: fix? run?
+   [Download Docker compose file](./docker-compose.yml)
 
-1. **Consul as Docker Container**: Download and initiate Consul in a Docker container.
-   
-   ```
-   > docker pull consul
-   > docker run -d -p 8500:8500 consul
-   ```
+   `> docker compose up` 
 
 _Your demonstration environment is now ready._
 
 ## Usage
 
-- **Create API Specification**: Use your preferred editor to create a YAML file for the API specification and store it in your CLI-connected repository. Ensure each specification has an API identifier (`x-api-identifier`) and a unique name.
+- **Create API Specification**: Use your preferred editor to create a YAML file for the API specification and store it in your CLI-connected repository. Ensure each specification has an API identifier (`x-api-identifier`) and a unique name. TODO: Link to concept?! Or do we build this string in the api spec reg??
+
 - **Publish API Specification**: Utilize the approval CLI to publish your API specification to the repository.
+  
 - **Verification**: Check the API specification registry UI to confirm the correct approval and deployment of your API specifications.
+
 - **Application Development**: Develop applications, both producers and consumers, that comply with the API specification. Producers should publish endpoints with the unique API identifier, and consumers should discover and connect to producers using the same identifier.
+
 - **Deployment**: Launch your application components.
+
 - **Verification with Service Explorer**: Utilize Visual Studio Code and the Service Explorer to list, verify, and test the existing producers and their API instances.
 
 ## Reference components
