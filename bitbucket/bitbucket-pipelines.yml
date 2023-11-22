@@ -7,4 +7,4 @@ pipelines:
           name: Deploy specifications
           deployment: production
           script:
-            - npm_config_registry=https://npm.sinetiq.net npx @sinetiq/service-type-registry-cli --glob **/service-type.json --ignore-already-registered
+            - npx @sinetiq/api-specification-registry-cli --glob **/api-specification.json --ignore-already-registered
