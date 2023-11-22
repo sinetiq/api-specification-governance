@@ -1,5 +1,16 @@
 # The architecture and concept
 
+This section will briefly go through our ecosystem to handle development process and the api specification through the complete life cycle.
+
+- Story
+- Benefits
+- Extensive experience and knowledge
+- Our unique approach
+- Architecture
+- Concept
+
+Complete product documentation can be found at hour home page [Product Documentation](www.sinetiq.se).
+
 ## Story
 
 Companies and organisations is facing rapidly demands and competitiveness challenges on their information systems (applications).
@@ -41,7 +52,7 @@ In runtime, each Provider publish and set its prescense within the Service Regis
 
 ## Architecture
 
-SERVICE ORIENTED BASED system solutions have decoupled life cycles for each of the components.
+Service based oriented system solutions have decoupled life cycles for each of the components.
 
 It is easier to govern and maintain a modern, long-term and effective integration. This leads to reduced resistance to developing a system solution.
 
