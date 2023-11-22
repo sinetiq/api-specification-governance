@@ -7,7 +7,7 @@ The environment for this demonstration is managed through a client computer with
 - **API specification repository**: Download and deploy docker container for the API specification repository. The Sinetiq Service Type Registry consist of published and approved api specification, mapping the identifier. TODO: describe domain/group.
 - **Service Registry (Consul from Hashicorp)**: Map API specifications and endpoints for establishing connections. 
 
-![Demo setup](./docs/img/SITCore-processes.png "Demo setup")
+<img src="./docs/img/SITCore-processes.png" width="600">
 
 ## Installation Steps
 
@@ -26,11 +26,11 @@ Use built in extension in vscode or at the command line, find the sinetiq.serivc
    `> docker compose up` todo: fix? run?
 
 1. **Consul as Docker Container**: Download and initiate Consul in a Docker container.
-
-```
+   
+   ```
    > docker pull consul
    > docker run -d -p 8500:8500 consul
-```
+   ```
 
 _Your demonstration environment is now ready._
 
