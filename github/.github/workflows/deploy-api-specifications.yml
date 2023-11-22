@@ -16,6 +16,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      # Push all service types matching --glob
-      - name: Push API definitions to registry
-        run: npm_config_registry=https://npm.sinetiq.net npx @sinetiq/service-type-registry-cli --glob **/service-type.json --ignore-already-registered
+      # Push all api specifications matching --glob
+      - name: Push API specifications to registry
+        run: npx @sinetiq/api-specification-registry-cli --glob **/api-specification.json --ignore-already-registered
