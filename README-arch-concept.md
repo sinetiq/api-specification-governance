@@ -55,7 +55,7 @@ Because the architecture is naturally federative, you can decide how much resour
 
 In addition, participants can choose which parts of a federal system solution that fits the individual needs.
 
-<img src="./docs/img/SITCore-soa.png" width="600">
+<img src="./docs/img/SITCore-soa.png" width="800">
 
 ## Concept
 
