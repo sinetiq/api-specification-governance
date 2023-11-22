@@ -11,6 +11,7 @@ import se.sinetiq.core.demo.api.client.api.DefaultApi;
 
 import se.sinetiq.core.sr.consul.api.ServiceType;
 import se.sinetiq.core.sr.consul.api.ServiceName;
+import se.sinetiq.core.sr.consul.api.ServiceData;
 
 public class TemperatureSensorConsumer {
 
@@ -22,7 +23,10 @@ public class TemperatureSensorConsumer {
       System.out.println("Service registry configuration failure!");
       return;
     }
+
+    //
     // Part 1: Discover (lookup) services (api instances) that fulfill the api specification 'temperature-sensor'
+    //
     ServiceType serviceType = new ServiceType("temperature-sensor-rest-json");
     List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
     System.out.println("Found " + apiInstances.size() + " instaces.");
@@ -31,8 +35,23 @@ public class TemperatureSensorConsumer {
       System.out.println("+ " + sn.getName());
     }
 
+    if(apiInstances.size() <= 0) {
+      System.out.println("No services found, abort");
+      return;
+    }
+
+    //
+    // Part 2: Use discovery endpoint details for establish connection
+    //
+    ServiceName sn = apiInstances.get(0); // Just pick the first service (api instance) found
+    ServiceData sd = consulAPI.getServiceData(sn);
+    if(sd == null) {
+      System.out.println("No services data found, abort");
+      return;
+    }
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://127.0.0.1:8080");
+    String pathStr = sd.getProperties().get("path")!=null?sd.getProperties().get("path"):"";
+    defaultClient.setBasePath("http://" + sd.getHost() + ":" + sd.getPort() /*+ pathStr*/);
 
     DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
