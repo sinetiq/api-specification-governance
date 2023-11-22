@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  description: "This is a simple API for accessing temperature sensor data. \n\nProducer:\
+    \ The producer in this context is the temperature sensor along with its hosting\
+    \ system.\n\n- GET /units: This endpoint returns a list of supported temperature\
+    \ units. \n- GET /temperature: This endpoint provides the current temperature\
+    \ reading and associated metadata. \n- GET /temperature/history: This endpoint\
+    \ provides historical temperature readings.\n\nConsumer: The consumer is any application\
+    \ or system that needs to retrieve temperature data from the producer. \n\n- GET\
+    \ /units: A consumer would make a GET request to this endpoint to find out what\
+    \ units of temperature the producer supports. \n- GET /temperature: The consumer\
+    \ retrieves the current temperature reading and metadata by making a GET request\
+    \ to this endpoint. \n- GET /temperature/history: The consumer retrieves historical\
+    \ temperature readings by making a GET request to this endpoint.\n\nProcedure:\
+    \ Here is a typical interaction between a producer and a consumer:\n\n- The consumer\
+    \ system sends a GET request to the /units endpoint. The producer system receives\
+    \ the request and responds with a list of supported temperature units.\n- The\
+    \ consumer system sends a GET request to the /temperature endpoint. The producer\
+    \ system receives the request and responds with the current temperature reading\
+    \ and related metadata.\n- The consumer system sends a GET request to the /temperature/history\
+    \ endpoint. The producer system receives the request and responds with the historical\
+    \ temperature readings.\n"
+  title: Temperature Sensor API HTTP(S)-JSON
+  version: 1.0.0
+  x-service-identifier: temperature-sensor
+servers:
+- url: /
+paths:
+  /units:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Units'
+          description: List of supported temperature units
+      summary: Get supported temperature units
+      x-accepts: application/json
+  /temperature:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureData'
+          description: Temperature data
+      summary: Get current temperature data
+      x-accepts: application/json
+  /temperature/history:
+    get:
+      parameters:
+      - description: Start date/time for the historical data
+        explode: true
+        in: query
+        name: start_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: End date/time for the historical data
+        explode: true
+        in: query
+        name: end_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoricalTemperatureData'
+          description: Historical temperature data
+      summary: Get historical temperature data
+      x-accepts: application/json
+components:
+  schemas:
+    Units:
+      example:
+        units:
+        - units
+        - units
+      properties:
+        units:
+          items:
+            type: string
+          type: array
+      type: object
+    TemperatureData:
+      example:
+        unit: unit
+        machineID: machineID
+        temperature: 0.8008281904610115
+        location: location
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        temperature:
+          type: number
+        unit:
+          type: string
+        location:
+          type: string
+        machineID:
+          type: string
+        timestamp:
+          format: date-time
+          type: string
+      type: object
+    HistoricalTemperatureData:
+      example:
+        readings:
+        - unit: unit
+          machineID: machineID
+          temperature: 0.8008281904610115
+          location: location
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        - unit: unit
+          machineID: machineID
+          temperature: 0.8008281904610115
+          location: location
+          timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        readings:
+          items:
+            $ref: '#/components/schemas/TemperatureData'
+          type: array
+      type: object
+
