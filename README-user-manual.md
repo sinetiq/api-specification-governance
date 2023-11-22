@@ -41,6 +41,8 @@ _Your demonstration environment is now ready._
 - **Deployment**: Launch your application components.
 
 - **Verification with Service Explorer**: Utilize Visual Studio Code and the Service Explorer to list, verify, and test the existing producers and their API instances.
+  
+  ![Service explorer](./docs/media/preview.gif)
 
 ## Reference components
 

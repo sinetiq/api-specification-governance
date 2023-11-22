@@ -4,21 +4,19 @@
 
 It provides a comprehensive showcase of the offer SINETIQ Core methodology, focusing on application in an organizational setting for discussion, decision-making, and potential adoption.
 
-
 ## The architecture and concept
 
 See the [Architecture & Concept Guide](./README-arch-concept.md) for information about the architectural and conceptual aspects within SINETIQ Core, its *unique approach* and extensive experience and knowledge.
 
 ## Getting Started
 
-See the [User Manual](./README-user-manual.md) for an in-depth explanation of all aspects of demo installation, configuration and behavior.
+See the [User Manual](./README-user-manual.md) for an in-depth explanation of all aspects of demo regarding installation, configuration and behavior.
 
-The example ships with [examples](./bitbucket/README.md) which you can run, inspect, & modify.
-todo: pipelines, provider + consumer, example-yaml
+The demonstration ships with `examples` which you can run, inspect & modify.
 
 ## How to Build, etc.
 
-See the [Cookbook Guide](./README-build-run.md) for details about modifying the example code, build, test, IDE integration, etc.
+See the [Cookbook Guide](./README-build-run.md) for details about modifying the example code, build, test, run etc.
 
 ## Reach out
 
