@@ -31,37 +31,35 @@ public class ConsulAPI {
  
     public ConsulAPI() { }
 
-    public boolean configure(String serverIP, String serverPort) {
-        URL url = null;
-
-        try {
-            String urrl = "http://" + serverIP + ":" + serverPort;
-            if(serverPort.equalsIgnoreCase("443")) {
-                urrl = "https://" + serverIP;
-            }
-            
-            if (serverIP.isEmpty() || serverPort.isEmpty()) {
-                url = null;
-            } else {
-                url = new URL(urrl);
-            }
-
-            if (url == null) {
-                return false;
-            }
-
-            client = Consul.builder().withUrl(url).build();
-        } catch (ConsulException e) {
-            LOG.log(Level.SEVERE, "Consul exception " + e.getStackTrace());
-            return false;
-
-        } catch (MalformedURLException e) {
-            LOG.log(Level.SEVERE, "Bad URL.");
-            return false;
+    public void configure(String serverIP, String serverPort) throws MalformedURLException, ConsulException {
+        if (serverIP.isEmpty() || serverPort.isEmpty()) {
+            throw new IllegalArgumentException(String.format("serverIP: %s, serverPort: %s", serverIP, serverPort));
         }
 
+        URL url = null;
+        if (serverPort.equalsIgnoreCase("443")) {
+            url = new URL("https://" + serverIP);
+        } else {
+            url = new URL("http://" + serverIP + ":" + serverPort);
+        }
+
+        LOG.log(Level.INFO, "Using service registry at " + url);
+
+        int retry_limit = 10;
+        client = null;
+        for (int i = 1; i <= retry_limit; i++) {
+            try {
+                client = Consul.builder().withUrl(url).build();
+                break;
+            } catch (ConsulException ce) {
+                LOG.log(Level.WARN, String.format("Consul exception (%s), retrying (%d/%d)",
+                        ce.getMessage(), i, retry_limit));
+            }
+        }
+        if (client == null) {
+            throw new RuntimeException("Gave up connecting to Consul due to previous errors"); // TODO: propagate better
+        }
         agentClient = client.agentClient();
-        return true;
     }
 
     public List<ServiceName> getServiceInstances(ServiceType type) {

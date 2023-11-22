@@ -26,8 +26,10 @@ public class ServerInformation {
         int port = getPort();
 
         ConsulAPI consulAPI = new ConsulAPI();
-        if(consulAPI.configure(environment.getProperty("sr.host"), environment.getProperty("sr.port")) == false) {
-          throw new Exception("Service registry configuration failure!");
+        try {
+            consulAPI.configure(environment.getProperty("sr.host"), environment.getProperty("sr.port"));
+        } catch (Throwable t) {
+            throw new Exception("Service registry configuration failure!", t);
         }
         ServiceData sd = new ServiceData();
         sd.setHost(host);
@@ -43,8 +45,10 @@ public class ServerInformation {
     @EventListener
     public void onApplicationEvent(ContextClosedEvent event) throws Exception {
         ConsulAPI consulAPI = new ConsulAPI();
-        if(consulAPI.configure(environment.getProperty("sr.host"), environment.getProperty("sr.port")) == false) {
-          throw new Exception("Service registry configuration failure!");
+        try {
+            consulAPI.configure(environment.getProperty("sr.host"), environment.getProperty("sr.port"));
+        } catch (Throwable t) {
+            throw new Exception("Service registry configuration failure!", t);
         }
         String serviceName = environment.getProperty("service.name");
         String serviceType = environment.getProperty("service.type");
