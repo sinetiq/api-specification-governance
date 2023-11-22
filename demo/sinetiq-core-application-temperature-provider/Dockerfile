@@ -1,6 +1,3 @@
-# Fetch a base image. We will use OpenJDK 11 which is LTS
-#FROM openjdk:11-jdk-slim as builder
-#FROM eclipse-temurin:17-jdk-alpine AS builder
 FROM maven:3.3.9 AS builder
 
 # Make sure project dependencies are cached in a separate layer before building
@@ -12,12 +9,8 @@ RUN mvn -DskipTests=true package
 
 WORKDIR application
 
-# Copy your built jar file to the image
-#COPY ./target/temperature-provider-1.0.0.jar temperature-provider-1.0.0.jar
-
 # Second stage to create a minimal and secure image
 FROM openjdk:11-jre-slim
-# FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR application
 
