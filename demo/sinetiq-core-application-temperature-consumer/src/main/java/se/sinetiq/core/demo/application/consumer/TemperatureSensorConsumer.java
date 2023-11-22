@@ -17,12 +17,17 @@ public class TemperatureSensorConsumer {
 
   public static void main(String[] args) {
 
+    String host = System.getenv("CFG_SR_HOST");
+    String port = System.getenv("CFG_SR_PORT");
     ConsulAPI consulAPI = new ConsulAPI();
-    //(environment.getProperty("sr.host"), environment.getProperty("sr.port")
-    if(consulAPI.configure("localhost","8500") == false) {
+    try {
+      consulAPI.configure(host, port);
       System.out.println("Service registry configuration failure!");
-      return;
+    } catch (Throwable t) {
+      t.printStackTrace();
+      System.exit(1);
     }
+
 
     //
     // Part 1: Discover (lookup) services (api instances) that fulfill the api specification 'temperature-sensor'
