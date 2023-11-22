@@ -27,8 +27,7 @@ public class ConsulAPI {
     private static final Logger LOG = Logger.getLogger(ConsulAPI.class.getName());
 
     private AgentClient agentClient;
-    private Consul client;
- 
+
     public ConsulAPI() { }
 
     public void configure(String serverIP, String serverPort) throws MalformedURLException, ConsulException {
@@ -45,15 +44,20 @@ public class ConsulAPI {
 
         LOG.log(Level.INFO, "Using service registry at " + url);
 
-        int retry_limit = 10;
-        client = null;
+        int retry_limit = 3;
+        Consul client = null;
         for (int i = 1; i <= retry_limit; i++) {
             try {
                 client = Consul.builder().withUrl(url).build();
                 break;
             } catch (ConsulException ce) {
-                LOG.log(Level.WARN, String.format("Consul exception (%s), retrying (%d/%d)",
+                LOG.log(Level.WARNING, String.format("Consul exception (%s), retrying (%d/%d)",
                         ce.getMessage(), i, retry_limit));
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         if (client == null) {
@@ -61,6 +65,7 @@ public class ConsulAPI {
         }
         agentClient = client.agentClient();
     }
+
 
     public List<ServiceName> getServiceInstances(ServiceType type) {
         List<ServiceName> results = new ArrayList<ServiceName>();
