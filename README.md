@@ -7,7 +7,7 @@ It provides a comprehensive showcase of the offer SINETIQ Core methodology, focu
 
 ## The architecture and concept
 
-See the [Architecture & concept Guide](./README-arch-concept.md) for information about the architectural and conceptual aspects within SINETIQ Core, its *unique approach* and extensive experience and knowledge.
+See the [Architecture & Concept Guide](./README-arch-concept.md) for information about the architectural and conceptual aspects within SINETIQ Core, its *unique approach* and extensive experience and knowledge.
 
 ## Getting Started
 
