@@ -18,7 +18,7 @@ WORKDIR application
 COPY --from=builder target/temperature-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar temperature-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ENV CFG_SERVER_PORT=8081
-ENV CFG_SERVICE_NAME=TempProvider001
+ENV CFG_SERVICE_NAME=se.sinetiq.example:temperature-sensor-rest-json:1.0.0
 ENV CFG_SR_HOST=service-registry.sinetiq.net
 ENV CFG_SR_PORT=443
 
