@@ -7,6 +7,6 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  # Push all service types matching --glob
+  # Push all API specifications matching --glob
   - script: npx @sinetiq/api-specification-registry-cli --glob **/service-type.json --ignore-already-registered
-    displayName: 'Register service types using sinetiq/api-specification-registry-cli'
+    displayName: 'Register API specifications using sinetiq/api-specification-registry-cli'

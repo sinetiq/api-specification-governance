@@ -1,0 +1,10 @@
+pipeline {
+    agent { label '<agent-label>' }
+    stages {
+        stage('Register API specifications') {
+            steps {
+                sh 'npx @sinetiq/api-specification-registry-cli --glob **/api-specification.json'
+            }
+        }
+    }
+}
