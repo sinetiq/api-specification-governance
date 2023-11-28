@@ -1,0 +1,50 @@
+version: "3.9"
+
+x-common-variables: &db-env
+  POSTGRES_USER: servicetypes
+  POSTGRES_PASSWORD: hunter2
+  POSTGRES_DB: servicetypes
+
+services:
+  service-registry:
+    container_name: consul
+    hostname: consul
+    image: hashicorp/consul:latest
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    command: agent -server -ui -node=server1 -bootstrap-expect=1 -client=0.0.0.0
+
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      <<: *db-env
+
+  api-specification-registry:
+    container_name: api-specification-registry
+    platform: linux/amd64
+    restart: always
+    image: sinetiq/api-specification-registry
+    ports:
+      - "3333:3333"
+    environment:
+      <<: *db-env
+      SERVICE_REGISTRY_ADDRESS: http://consul:8500
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+
+  temp-provider:
+    container_name: temp-provider
+    environment:
+      - CFG_SR_HOST=consul
+      - CFG_SR_PORT=8500
+    build: sinetiq-core-application-temperature-provider/
+
+  temp-consumer:
+    container_name: temp-consumer
+    environment:
+      - CFG_SR_HOST=consul
+      - CFG_SR_PORT=8500
+    build: sinetiq-core-application-temperature-consumer/
