@@ -22,8 +22,8 @@ public class TemperatureSensorConsumer {
     ConsulAPI consulAPI = new ConsulAPI();
     try {
       consulAPI.configure(host, port);
-      System.out.println("Service registry configuration failure!");
     } catch (Throwable t) {
+      System.out.println("Service registry configuration failure!");
       t.printStackTrace();
       System.exit(1);
     }
@@ -32,9 +32,10 @@ public class TemperatureSensorConsumer {
     //
     // Part 1: Discover (lookup) services (api instances) that fulfill the api specification 'temperature-sensor'
     //
-    ServiceType serviceType = new ServiceType("temperature-sensor-rest-json");
+    String service = System.getenv("CFG_SERVICE_NAME");
+    ServiceType serviceType = new ServiceType(service);
     List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
-    System.out.println("Found " + apiInstances.size() + " instaces.");
+    System.out.println("Found " + apiInstances.size() + " instances.");
     for(ServiceName sn : apiInstances) {
       // Found service
       System.out.println("+ " + sn.getName());
@@ -61,6 +62,7 @@ public class TemperatureSensorConsumer {
     DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
       TemperatureData result = apiInstance.temperatureGet();
+      System.out.println("Response from " + sd.getName() + ":");
       System.out.println(result);
 
     } catch (ApiException e) {
