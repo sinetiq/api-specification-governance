@@ -68,6 +68,7 @@ public class ConsulAPI {
 
 
     public List<ServiceName> getServiceInstances(ServiceType type) {
+        LOG.log(Level.INFO, "Looking up " + type);
         List<ServiceName> results = new ArrayList<ServiceName>();
         for (ServiceData data : getAllServices()) {
             LOG.log(Level.INFO, "Service " + data.getName().getName());
@@ -83,7 +84,7 @@ public class ConsulAPI {
 
     public ServiceData getServiceData(ServiceName serviceName) {
         for (ServiceData data : getAllServices()) {
-          try {        
+          try {
             LOG.log(Level.INFO, "getServiceData: name = " + data.getName().getName() + " , sn = " + serviceName.getName());
             ConsulResponse<FullService> serviceData = agentClient.getService(data.getName().getName(), QueryOptions.BLANK);                
             if (serviceName.getName().equals(data.getName().getName())) {
@@ -151,7 +152,7 @@ public class ConsulAPI {
                 serviceData.setHost(service.getAddress());                
                 serviceData.setPort(service.getPort());
                 LOG.log(Level.INFO, "getAllServices: serviceData.setName(ServiceName.valueOf [service.getId()] = " + service.getId() + " , type = " + service.getService());
-                serviceData.setName(ServiceName.valueOf(service.getId() + "." + service.getService()));
+                serviceData.setName(new ServiceName(service.getId(), new ServiceType(service.getService())));
                 serviceData.getProperties().putAll(service.getMeta());
                 LOG.log(Level.INFO, "SERVICE DATA : " + serviceData.toString());
                 // service.getTags(); // TODO: use this?
