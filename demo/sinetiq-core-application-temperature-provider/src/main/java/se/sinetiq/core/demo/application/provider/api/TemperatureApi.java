@@ -39,11 +39,6 @@ import javax.annotation.Generated;
 @Validated
 @Tag(name = "temperature", description = "the temperature API")
 public interface TemperatureApi {
-
-    default Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
-
     /**
      * GET /temperature : Get current temperature data
      *
@@ -63,22 +58,8 @@ public interface TemperatureApi {
         value = "/temperature",
         produces = { "application/json" }
     )
-    default ResponseEntity<TemperatureData> temperatureGet(
-        
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"unit\" : \"unit\", \"machineID\" : \"machineID\", \"temperature\" : 0.8008281904610115, \"location\" : \"location\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
-    }
-
+    ResponseEntity<TemperatureData> temperatureGet();
 
     /**
      * GET /temperature/history : Get historical temperature data
@@ -101,21 +82,8 @@ public interface TemperatureApi {
         value = "/temperature/history",
         produces = { "application/json" }
     )
-    default ResponseEntity<HistoricalTemperatureData> temperatureHistoryGet(
+    ResponseEntity<HistoricalTemperatureData> temperatureHistoryGet(
         @NotNull @Parameter(name = "start_date", description = "Start date/time for the historical data", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "start_date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
         @NotNull @Parameter(name = "end_date", description = "End date/time for the historical data", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "end_date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"readings\" : [ { \"unit\" : \"unit\", \"machineID\" : \"machineID\", \"temperature\" : 0.8008281904610115, \"location\" : \"location\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"unit\" : \"unit\", \"machineID\" : \"machineID\", \"temperature\" : 0.8008281904610115, \"location\" : \"location\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
+    );
 }
