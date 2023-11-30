@@ -2,6 +2,8 @@ package se.sinetiq.core.demo.application.provider.api;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import se.sinetiq.core.demo.application.provider.model.HistoricalTemperatureData;
+
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import se.sinetiq.core.demo.application.provider.model.TemperatureData;
 
@@ -27,6 +29,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
 import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-06-20T08:44:02.600773+02:00[Europe/Stockholm]")
@@ -46,4 +49,14 @@ public class TemperatureApiController implements TemperatureApi {
         return Optional.ofNullable(request);
     }
 
+    @Override
+    public ResponseEntity<TemperatureData> temperatureGet() {
+        TemperatureData data = new TemperatureData()
+                .unit("°C")
+                .machineID("Thermometer 1")
+                .location("Site 1")
+                .timestamp(OffsetDateTime.now())
+                .temperature(BigDecimal.valueOf(42.0));
+        return ResponseEntity.ok(data);
+    }
 }

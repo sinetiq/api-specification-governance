@@ -38,6 +38,7 @@ services:
   temp-provider:
     container_name: temp-provider
     environment:
+      - server.host=temp-provider
       - CFG_SR_HOST=consul
       - CFG_SR_PORT=8500
     build: sinetiq-core-application-temperature-provider/
