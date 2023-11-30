@@ -35,12 +35,22 @@ services:
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
 
-  temp-provider:
-    container_name: temp-provider
+  temp-provider-1:
+    container_name: temp-provider-1
     environment:
-      - server.host=temp-provider
+      - server.host=temp-provider-1
       - CFG_SR_HOST=consul
       - CFG_SR_PORT=8500
+      - CFG_SERVICE_NAME=Temperature Provider 1
+    build: sinetiq-core-application-temperature-provider/
+
+  temp-provider-2:
+    container_name: temp-provider-2
+    environment:
+      - server.host=temp-provider-2
+      - CFG_SR_HOST=consul
+      - CFG_SR_PORT=8500
+      - CFG_SERVICE_NAME=Temperature Provider 2
     build: sinetiq-core-application-temperature-provider/
 
   temp-consumer:
