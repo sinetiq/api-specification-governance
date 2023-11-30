@@ -13,7 +13,6 @@ import se.sinetiq.core.sr.consul.api.ServiceType;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
 
@@ -45,20 +44,19 @@ public class TemperatureSensorConsumer {
                 HistoricalTemperatureData history = apiInstance.temperatureHistoryGet(
                         OffsetDateTime.now().minusSeconds(10),
                         OffsetDateTime.now());
-                System.out.printf("Response from %s%n:", sd.getName());
+                System.out.printf("Response from %s:%n", sd.getName());
                 System.out.printf("  Current temperature: %s (Read by %s at %s at %s)%n",
                         result.getTemperature(),
                         result.getMachineID(),
                         result.getLocation(),
                         result.getTimestamp().format(ofPattern("HH:mm:ss")));
-                System.out.printf("  History (Last 10s): %s%n",
-                        history.getReadings().stream()
-                                .map(data -> String.format("%s: %s°%s",
-                                        data.getTimestamp().format(ofPattern("HH:mm:ss")),
-                                        data.getTemperature(),
-                                        data.getUnit()))
-                                .collect(Collectors.toList()));
-
+                System.out.printf("  History (Last 10s):%n");
+                history.getReadings().forEach(reading -> {
+                    System.out.printf("    %s: %s°%s%n",
+                            reading.getTimestamp().format(ofPattern("HH:mm:ss")),
+                            reading.getTemperature(),
+                            reading.getUnit());
+                });
             } catch (ApiException e) {
                 System.err.println("Exception when calling DefaultApi#temperatureGet");
                 System.err.println("Status code: " + e.getCode());
