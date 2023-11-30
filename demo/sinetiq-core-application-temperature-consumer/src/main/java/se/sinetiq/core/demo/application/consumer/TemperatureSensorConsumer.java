@@ -45,7 +45,7 @@ public class TemperatureSensorConsumer {
                 HistoricalTemperatureData history = apiInstance.temperatureHistoryGet(
                         OffsetDateTime.now().minusSeconds(10),
                         OffsetDateTime.now());
-                System.out.println("Response from " + sd.getName() + ":");
+                System.out.printf("Response from %s%n:", sd.getName());
                 System.out.printf("  Current temperature: %s (Read by %s at %s at %s)%n",
                         result.getTemperature(),
                         result.getMachineID(),
@@ -88,7 +88,7 @@ public class TemperatureSensorConsumer {
             List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
 
             if (apiInstances.size() > 0) {
-                System.out.printf("Discovered %d service instances:", apiInstances.size());
+                System.out.printf("Discovered %d service instances:%n", apiInstances.size());
                 for (ServiceName sn : apiInstances) {
                     System.out.println("+ " + sn.getName());
                 }
