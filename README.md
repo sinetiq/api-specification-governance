@@ -36,6 +36,7 @@ The environment for this demonstration is managed through a client computer and 
 <img align="center" src="./dosc/media/../../docs/media/api-governance-processes.png" width="600">
 </div>
   
+<p>&nbsp;</p>
 
 ### Installation Guide
 
@@ -80,14 +81,21 @@ _Your demonstration environment is now ready._
 
 #### Verify installation
 
-1. Verify the API Specification Registry.
+1. Verify the API Specification Registry.  
+   Open a webbrowser, use url http://localhost:3333/ to verify up-n-running.
 
-2. Verify Service Registry. Use chrome localhost:8500.
+2. Verify Service Registry.  
+   Open a webbroser, use url http://localhost:8500/ to verify up-n-running.
 
-3. Verify Service Explorer.
+3. Verify Service Explorer.  
+   Open Visual Code, verify the `Service Explroer` accroding to user manual.
 
 4. Verify CLI-installed.
+   ```sh
+   npm -v @sinetiq/api-specification-registry-cli
+   ```
 
+<p>&nbsp;</p>
 
 ## Usage
 
@@ -102,7 +110,24 @@ The steps 1 to 5 will show how to run this demonstration and successfully mange 
 Use your preferred editor to create a YAML file for the API specification and store it in your versioning repository (ex. git). Ensure each specification has an API identifier (`x-api-identifier`) with a unique name. _The API specifications will be loosely coupled, no server part and only one specific information object (resource)._ 
 
   ```sh
-  <example api spec - yaml>
+    openapi: 3.0.0
+    info:
+      description: This is a simple API for accessing temperature sensor data.
+      title: Temperature Sensor API HTTP(S)-JSON
+      version: 1.0.0
+      x-service-identifier: temperature-sensor
+    paths:
+      /temperature:
+        get:
+          responses:
+            200:
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/TemperatureData'
+              description: Temperature data
+          summary: Get current temperature data
+          x-accepts: application/json
   ```
 
 ### Step 2: Publish API Specification
@@ -123,17 +148,30 @@ Check the API specification registry UI to confirm the correct approval and depl
 ### Step 3: Application Development
 Develop applications, both providers and consumers, that comply with the API specification. Provider should publish endpoints with the unique API identifier, and consumers should discover and connect to providers using the identifier.
 
-1. Service Provider(s) publish the endpoint, for example "temperature-service-rest-json".
+1. Service Provider(s) publish the endpoint, for example serviceType `temperature-service-rest-json`.
 
     ```sh
-    <example snippet>
+    ServiceData sd = new ServiceData();
+    sd.setHost(host);
+    sd.setPort(port);
+    String serviceName = environment.getProperty("service.name");
+    String serviceType = environment.getProperty("service.type");
+    sd.setName(new ServiceName(serviceName, new ServiceType(serviceType)));
+    String basePath = environment.getProperty("service.basePath");
+    sd.getProperties().put("path", basePath);
+    consulAPI.registerService(sd);
     ```
     _See complete Provider example code here._
 
 2. Service Consumer(s) discover the information source endpoint to be able to establish connection.
 
     ```sh
-    <example snippet>
+    ServiceType serviceType = new ServiceType("temperature-sensor-rest-json");
+    List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
+    System.out.println("Found " + apiInstances.size() + " instaces.");
+    for(ServiceName sn : apiInstances) {
+      System.out.println("Instance: " + sn.getName());
+    }
     ```
     _See complete Consumer example code here._
 
@@ -153,6 +191,8 @@ Utilize Visual Studio Code and the Service Explorer to list, verify, and test th
   2. Explore the `API instance registry`
   3. Choose one API instance and test the provider API implementation
      a. Send a request a examin the response
+
+<p>&nbsp;</p>
 
 ## How to Build, etc.
 
