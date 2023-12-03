@@ -8,7 +8,7 @@ The covered processes are:
 - API **deployment**; how to deploy a provider, or consumer, component instance and its API instance(s).
 - API **compliancy** test and **verification**; how to verify and test a provider API instance API specification implementation.
 
-_Sinetiq Framwork provides core capabilities that support development and governance methodologies that forms a robust integration ecosystem for small, medium and large enterprise organizations with a heterogenous system landscape._
+_Sinetiq Framework provides core capabilities that support development and governance methodologies that forms a robust integration ecosystem for small, medium and large enterprise organizations with a heterogenous system landscape._
 
 <p>&nbsp;</p>
 
@@ -31,7 +31,7 @@ The environment for this demonstration is managed through a client computer and 
 
 - **Service Registry** (Consul from Hashicorp): An active service registry for mapping API specification identifiers and endpoints, used to establishing right connections for wanted information exchange.
 
-- **Service Explorer**: List and view approved API specifications, published within the API specification registry, together with active provider API instances, published within the service registry. The `Sinetiq Service Explorer` is a VSCode extension that helps you find service instances and their specifications while developing.
+- **Service Explorer**: List and view approved API specifications, published within the API specification registry, together with active provider API instances, published within the service registry. The `Sinetiq Service Explorer` is a VSCode extension that helps you find service instances, their specifications and verify the implementaition while developing.
 
 <p>&nbsp;</p>
 <div style="text-align:center">
