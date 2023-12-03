@@ -19,7 +19,7 @@ The demonstration showcase also ships with hands-on code `examples` and componen
 
 ### Demonstration Setup
 
-The environment for this demonstration is managed through a client computer with specific components downloaded:
+The environment for this demonstration is managed through a client computer and components listed below.
 
 - **API specification registry**: The `Sinetiq API Specification Registry` consist of published and approved api specifications with its generated unique identifier.
 
@@ -31,18 +31,18 @@ The environment for this demonstration is managed through a client computer with
 
 - **Service Explorer**: List and view approved API specifications, published within the API specification registry, together with active provider API instances, published within the service registry. The `Sinetiq Service Explorer` is a VSCode extension that helps you find service instances and their specifications while developing.
 
-
 <p>&nbsp;</p>
 <div style="text-align:center">
 <img align="center" src="./dosc/media/../../docs/media/api-governance-processes.png" width="600">
 </div>
+  
 
 ### Installation Guide
 
 #### Registry services
 This will start the registry components, `API specification registry` and `Service Registry`.
 
-1. Fetch the demonstration repository.   
+1. Fetch the demonstration github repository.   
 ```sh
 git clone git@github.com:Sinetiq/api-specification-governance.git
 ```
@@ -54,7 +54,7 @@ cd api-specification-governance
 docker-compose up
 ```
 
-_You can stop your registry services with <CTRL-C>._
+_You can stop your registry services with CTRL-C._
 
 #### Service explorer
 Download and configure Visual Studio Code as your demonstration editor. Install the SINETIQ Service Explorer plugin. Follow the readme at the visual studio code marketplace [https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explore](https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explore).
