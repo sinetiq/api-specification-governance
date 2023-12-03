@@ -10,6 +10,8 @@ The covered processes are:
 
 _Sinetiq Framwork provides core capabilities that support development and governance methodologies that forms a robust integration ecosystem for small, medium and large enterprise organizations with a heterogenous system landscape._
 
+<p>&nbsp;</p>
+
 ## Getting Started
 
 This section will give an in-depth explanation of components used, the `demonstration setup` and hands-on step-by-step `installation guide`.
@@ -44,16 +46,16 @@ The environment for this demonstration is managed through a client computer and 
 This will start the registry components, `API specification registry` and `Service Registry`.
 
 1. Fetch the demonstration github repository.   
-```sh
-git clone git@github.com:Sinetiq/api-specification-governance.git
-```
+    ```sh
+    git clone git@github.com:Sinetiq/api-specification-governance.git
+    ```
 
 2. Change directory to the root git folder where the docker-compose.yml can be found, run the docker command.
-```sh
-cd api-specification-governance
+    ```sh
+    cd api-specification-governance
 
-docker-compose up
-```
+    docker-compose up
+    ```
 
 _You can stop your registry services with CTRL-C._
 
@@ -142,7 +144,7 @@ For test and deemonstration purpose use the command line call publish the specif
 Check the API specification registry UI to confirm the correct approval and deployment of your API specifications.
 
 1. Start a web browser
-2. Type in `api-registry-url:port/asdasd`
+2. Type in `api-registry-url:3333`
 3. Your spec is now published within the API specification registry.
 
 ### Step 3: Application Development
