@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: Temperature Sensor API HTTP(S)-JSON
+  version: 1.0.0
+  x-service-identifier: temperature-sensor
+  description: |
+    This is a simple API for accessing temperature sensor data. 
+
+    Producer: The producer in this context is the temperature sensor along with its hosting system.
+    
+    - GET /units: This endpoint returns a list of supported temperature units. 
+    - GET /temperature: This endpoint provides the current temperature reading and associated metadata. 
+    - GET /temperature/history: This endpoint provides historical temperature readings.
+
+    Consumer: The consumer is any application or system that needs to retrieve temperature data from the producer. 
+
+    - GET /units: A consumer would make a GET request to this endpoint to find out what units of temperature the producer supports. 
+    - GET /temperature: The consumer retrieves the current temperature reading and metadata by making a GET request to this endpoint. 
+    - GET /temperature/history: The consumer retrieves historical temperature readings by making a GET request to this endpoint.
+
+    Procedure: Here is a typical interaction between a producer and a consumer:
+
+    - The consumer system sends a GET request to the /units endpoint. The producer system receives the request and responds with a list of supported temperature units.
+    - The consumer system sends a GET request to the /temperature endpoint. The producer system receives the request and responds with the current temperature reading and related metadata.
+    - The consumer system sends a GET request to the /temperature/history endpoint. The producer system receives the request and responds with the historical temperature readings.
+  
+paths:
+  /units:
+    get:
+      summary: Get supported temperature units
+      responses:
+        '200':
+          description: List of supported temperature units
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Units'
+  /temperature:
+    get:
+      summary: Get current temperature data
+      responses:
+        '200':
+          description: Temperature data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureData'
+  /temperature/history:
+    get:
+      summary: Get historical temperature data
+      parameters:
+        - in: query
+          name: start_date
+          schema:
+            type: string
+            format: date-time
+          required: true
+          description: Start date/time for the historical data
+        - in: query
+          name: end_date
+          schema:
+            type: string
+            format: date-time
+          required: true
+          description: End date/time for the historical data
+      responses:
+        '200':
+          description: Historical temperature data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoricalTemperatureData'
+
+components:
+  schemas:
+    Units:
+      type: object
+      properties:
+        units:
+          type: array
+          items:
+            type: string
+    TemperatureData:
+      type: object
+      properties:
+        temperature:
+          type: number
+        unit:
+          type: string
+        location:
+          type: string
+        machineID:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    HistoricalTemperatureData:
+      type: object
+      properties:
+        readings:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemperatureData'
