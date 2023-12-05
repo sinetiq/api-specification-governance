@@ -8,7 +8,6 @@ x-common-variables: &db-env
 services:
   service-registry:
     container_name: consul
-    hostname: consul
     image: hashicorp/consul:latest
     ports:
       - "8500:8500"
@@ -38,24 +37,28 @@ services:
   temp-provider-1:
     container_name: temp-provider-1
     environment:
-      - server.host=temp-provider-1
-      - CFG_SR_HOST=consul
-      - CFG_SR_PORT=8500
-      - CFG_SERVICE_NAME=Temperature Provider 1
+      - SR_ADDRESS=service-registry
+      - SERVICE_ADVERTISED_ADDRESS=temp-provider-1
+      - SERVICE_ADVERTISED_PORT=8080
+      - SERVICE_NAME=TempProvider1
     build: sinetiq-core-application-temperature-provider/
 
   temp-provider-2:
     container_name: temp-provider-2
     environment:
-      - server.host=temp-provider-2
-      - CFG_SR_HOST=consul
-      - CFG_SR_PORT=8500
-      - CFG_SERVICE_NAME=Temperature Provider 2
+      - SR_ADDRESS=consul
+      - SERVER_ADDRESS=temp-provider-2
+      - SERVICE_ADVERTISED_PORT=8080
+      - SERVICE_NAME=TempProvider2
     build: sinetiq-core-application-temperature-provider/
 
   temp-consumer:
     container_name: temp-consumer
     environment:
-      - CFG_SR_HOST=consul
+      - CFG_SR_HOST=service-registry
       - CFG_SR_PORT=8500
     build: sinetiq-core-application-temperature-consumer/
+
+networks:
+  default:
+    name: sinetiq-local-cloud
