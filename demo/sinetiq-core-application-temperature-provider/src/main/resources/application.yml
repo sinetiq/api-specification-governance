@@ -1,0 +1,17 @@
+#server.host=localhost
+#server.port=8080
+sr:
+  host: localhost
+  port: 8500
+service:
+  name: REPLACE_TempProvider001
+  type: se.sinetiq.example:temperature-sensor-rest-json:1.0.0
+  basePath: base-path-sensor/
+  advertised-address: localhost
+  advertised-port: 8080
+
+spring:
+  jackson:
+    date-format: se.sinetiq.core.demo.application.provider.RFC3339DateFormat
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
