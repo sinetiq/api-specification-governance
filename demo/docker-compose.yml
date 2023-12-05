@@ -58,3 +58,7 @@ services:
       - CFG_SR_HOST=service-registry
       - CFG_SR_PORT=8500
     build: sinetiq-core-application-temperature-consumer/
+
+networks:
+  default:
+    name: sinetiq-local-cloud
