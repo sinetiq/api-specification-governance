@@ -21,26 +21,14 @@ import org.springframework.web.context.request.NativeWebRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-06-20T08:44:02.600773+02:00[Europe/Stockholm]")
 @Controller
 @RequestMapping("${openapi.temperatureSensorAPIHTTPSJSON.base-path:}")
 public class UnitsApiController implements UnitsApi {
-
-    private final NativeWebRequest request;
-
-    @Autowired
-    public UnitsApiController(NativeWebRequest request) {
-        this.request = request;
+    public ResponseEntity<Units> unitsGet() {
+        return ResponseEntity.ok(new Units().units(Arrays.asList("C", "F", "K")));
     }
-
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.ofNullable(request);
-    }
-
 }

@@ -36,11 +36,6 @@ import javax.annotation.Generated;
 @Validated
 @Tag(name = "units", description = "the units API")
 public interface UnitsApi {
-
-    default Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
-
     /**
      * GET /units : Get supported temperature units
      *
@@ -60,20 +55,5 @@ public interface UnitsApi {
         value = "/units",
         produces = { "application/json" }
     )
-    default ResponseEntity<Units> unitsGet(
-        
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"units\" : [ \"celsius\" ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
+    ResponseEntity<Units> unitsGet();
 }

@@ -1,17 +1,22 @@
 package se.sinetiq.core.demo.application.consumer;
 
-import java.util.List;
-
 import se.sinetiq.core.demo.api.client.ApiClient;
 import se.sinetiq.core.demo.api.client.ApiException;
 import se.sinetiq.core.demo.api.client.Configuration;
+import se.sinetiq.core.demo.api.client.api.DefaultApi;
+import se.sinetiq.core.demo.api.client.model.HistoricalTemperatureData;
 import se.sinetiq.core.demo.api.client.model.TemperatureData;
 import se.sinetiq.core.sr.consul.api.ConsulAPI;
-import se.sinetiq.core.demo.api.client.api.DefaultApi;
-
-import se.sinetiq.core.sr.consul.api.ServiceType;
-import se.sinetiq.core.sr.consul.api.ServiceName;
 import se.sinetiq.core.sr.consul.api.ServiceData;
+import se.sinetiq.core.sr.consul.api.ServiceName;
+import se.sinetiq.core.sr.consul.api.ServiceType;
+
+import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 public class TemperatureSensorConsumer {
 
@@ -28,25 +33,49 @@ public class TemperatureSensorConsumer {
             System.exit(1);
         }
 
-        ServiceData sd = lookupTempService(consulAPI);
+        while (true) {
 
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        String pathStr = sd.getProperties().get("path") != null ? sd.getProperties().get("path") : "";
-        defaultClient.setBasePath("http://" + sd.getHost() + ":" + sd.getPort() /*+ pathStr*/);
+            ServiceData sd = lookupTempService(consulAPI);
 
-        DefaultApi apiInstance = new DefaultApi(defaultClient);
-        try {
-            TemperatureData result = apiInstance.temperatureGet();
-            System.out.println("Response from " + sd.getName() + ":");
-            System.out.println(result);
+            ApiClient defaultClient = Configuration.getDefaultApiClient();
+            defaultClient.setBasePath("http://" + sd.getHost() + ":" + sd.getPort() /*+ pathStr*/);
 
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#temperatureGet");
-            System.err.println("Status code: " + e.getCode());
-            System.err.println("Reason: " + e.getResponseBody());
-            System.err.println("Response headers: " + e.getResponseHeaders());
-            /*e.printStackTrace();*/
+            DefaultApi apiInstance = new DefaultApi(defaultClient);
+            try {
+                TemperatureData result = apiInstance.temperatureGet();
+                HistoricalTemperatureData history = apiInstance.temperatureHistoryGet(
+                        OffsetDateTime.now().minusSeconds(10),
+                        OffsetDateTime.now());
+                System.out.printf("Response from %s (%s):%n", sd.getName().getName(), sd.getName().getType());
+                System.out.printf("  Current temperature: %s", formatReading(result));
+                System.out.printf("  History (Last 10s):%n");
+                Optional.ofNullable(history.getReadings()).orElse(Collections.emptyList()).forEach(
+                        reading -> System.out.printf("    %s%n", formatReading(reading))
+                );
+            } catch (ApiException e) {
+                System.err.println("Exception when calling DefaultApi#temperatureGet");
+                System.err.println("Status code: " + e.getCode());
+                System.err.println("Reason: " + e.getResponseBody());
+                System.err.println("Response headers: " + e.getResponseHeaders());
+            }
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
+
+    static String formatReading(TemperatureData reading) {
+        if (reading.getTimestamp() == null) {
+            throw new IllegalArgumentException("Data has no timestamp");
+        }
+        return String.format("%s (Read by %s at %s at %s)",
+                reading.getTemperature(),
+                reading.getMachineID(),
+                reading.getLocation(),
+                reading.getTimestamp().format(ofPattern("HH:mm:ss")));
     }
 
     static ServiceData lookupTempService(ConsulAPI consulAPI) {
@@ -55,17 +84,17 @@ public class TemperatureSensorConsumer {
 
         int retry_limit = 10;
         for (int i = 1; i <= retry_limit; i++) {
-            System.out.println("Attempting to call service (" + i + "/" + retry_limit + ")");
+            System.out.printf("Attempting to discover service and fetch temperature data (%d/%d)%n", i, retry_limit);
             //
             // Part 1: Discover (lookup) services (api instances) that fulfill the api specification 'temperature-sensor'
             //
             List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
-            System.out.println("Found " + apiInstances.size() + " instances.");
-            for (ServiceName sn : apiInstances) {
-                System.out.println("+ " + sn.getName());
-            }
 
             if (apiInstances.size() > 0) {
+                System.out.printf("Discovered %d service instances:%n", apiInstances.size());
+                for (ServiceName sn : apiInstances) {
+                    System.out.println("+ " + sn.getName());
+                }
                 //
                 // Part 2: Use discovery endpoint details for establish connection
                 //
