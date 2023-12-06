@@ -6,32 +6,60 @@ x-common-variables: &db-env
   POSTGRES_DB: servicetypes
 
 services:
-
   service-registry:
     container_name: consul
-    hostname: consul
     image: hashicorp/consul:latest
+    command: agent -server -ui -node=server1 -bootstrap-expect=1 -client 0.0.0.0
+    #    network_mode: host
     ports:
       - "8500:8500"
       - "8600:8600/udp"
-    command: agent -server -ui -node=server1 -bootstrap-expect=1 -client=0.0.0.0
+
 
   db:
-    container_name: db
+    container_name: postgres
     image: postgres
     restart: always
     environment:
       <<: *db-env
+  #    network_mode: host
 
   api-specification-registry:
     container_name: api-specification-registry
     platform: linux/amd64
     restart: always
     image: sinetiq/api-specification-registry
-    ports:
-      - "3333:3333"
     environment:
       <<: *db-env
-      SERVICE_REGISTRY_ADDRESS: http://consul:8500
+      SERVICE_REGISTRY_ADDRESS: http://service-registry:8500
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
+    #    network_mode: host
+    ports:
+      - "3333:3333"
+
+  temp-provider-1:
+    container_name: temp-provider-1
+    environment:
+      - SR_HOST=service-registry
+      - SERVICE_ADVERTISED_ADDRESS=http://localhost:7401/
+      - SERVICE_ADVERTISED_PORT=7401
+      - SERVICE_NAME=TempProvider1
+    build: demo/sinetiq-core-application-temperature-provider/
+    ports:
+      - "7401:8080"
+
+  register-api-specs:
+    container_name: register-api-specs
+    image: node:21
+    volumes:
+      - ./temperature-api.yaml:/specs/temperature-api.yaml
+    entrypoint: |
+      npx @sinetiq/api-specification-registry-cli \
+            -g se.sinetiq.example \
+            -a service-type-discovery-rest-json \
+            -v 1.0.0 \
+            -r http://localhost:3333/ \
+            --open-api /specs/temperature-api.yaml
+    profiles:
+      - manual_start
