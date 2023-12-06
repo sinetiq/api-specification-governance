@@ -56,6 +56,8 @@ This will start the registry components, `API specification registry` and `Servi
 #### Service explorer
 Download and configure Visual Studio Code as your demonstration editor. Install the SINETIQ Service Explorer plugin. Follow the readme at the visual studio code marketplace [https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explorer](https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explorer).
 
+Note: Modify the configuration of the `Service Explorer` to use your local registries. 
+
 
 _Your demonstration environment is now ready._
 
@@ -80,7 +82,7 @@ The steps 1 to 5 will show how to run this demonstration and successfully mange 
 <p>&nbsp;</p>
 
 ### Step 1: Create API Specification
-Use your preferred editor to create a YAML file for the API specification and store it in your versioning repository (ex. git). Ensure each specification has an API identifier (`x-api-identifier`) with a unique name. _The API specifications will be loosely coupled, no server part and only one specific information object (resource)._ 
+Use your preferred editor to create a YAML file for the API specification and store it in your versioning repository (ex. git).
 
   ```sh
     openapi: 3.0.0
@@ -88,7 +90,6 @@ Use your preferred editor to create a YAML file for the API specification and st
       description: This is a simple API for accessing temperature sensor data.
       title: Temperature Sensor API HTTP(S)-JSON
       version: 1.0.0
-      x-service-identifier: temperature-sensor
     paths:
       /temperature:
         get:
