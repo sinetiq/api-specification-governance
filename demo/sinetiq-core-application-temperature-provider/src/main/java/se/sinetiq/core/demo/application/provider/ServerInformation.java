@@ -1,9 +1,6 @@
 package se.sinetiq.core.demo.application.provider;
 
 import com.orbitz.consul.NotRegisteredException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.EventListener;
@@ -48,7 +45,7 @@ public class ServerInformation {
     private ConsulAPI getAPI() {
         ConsulAPI consulAPI = new ConsulAPI();
         try {
-            consulAPI.configure(serviceRegistryProperties.getAddress(), serviceRegistryProperties.getPort() + ""); // TODO: Migrate to int
+            consulAPI.configure(serviceRegistryProperties.getHost(), serviceRegistryProperties.getPort() + ""); // TODO: Migrate to int
             return consulAPI;
         } catch (Throwable t) {
             throw new IllegalStateException("Service registry configuration failure!", t);
