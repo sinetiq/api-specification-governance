@@ -172,4 +172,4 @@ You can find the provider and consumer within the demo folder.
 
 Please reach out by contact us throught email [Contact Us](mailto:info@sinetiq.se) for details, discussion, report an bug, request a feature, schedule a demonstration, etc.
 
-Complete product documentation can be achivied at hour home page [Product Documentation](www.sinetiq.se) by comply to our SINETIQ Framework customer form.
+Complete product documentation can be achivied at hour home page [Product Documentation](http://www.sinetiq.se) by comply to our SINETIQ Framework customer form.
