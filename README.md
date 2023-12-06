@@ -8,22 +8,19 @@ The covered processes are:
 - API **deployment**; how to deploy a provider, or consumer, component instance and its API instance(s).
 - API **compliancy** test and **verification**; how to verify and test a provider API instance API specification implementation.
 
-_Sinetiq Framework provides core capabilities that support development and governance methodologies that forms a robust integration ecosystem for small, medium and large enterprise organizations with a heterogenous system landscape._
-
 <p>&nbsp;</p>
 
 ## Getting Started
 
-This section will give an in-depth explanation of components used, the `demonstration setup` and hands-on step-by-step `installation guide`.
+This section will give an in-depth explanation of components used, the `demonstration setup` and hands-on step-by-step `installation guide`. If preferred you can step to the [Usage](#usage) section directly.
 
 The demonstration showcase also ships with hands-on code `examples` and components, to run, inspect & modify.
-
 
 ### Demonstration Setup
 
 The environment for this demonstration is managed through a client computer and components listed below.
 
-- **API specification registry**: The `Sinetiq API Specification Registry` consist of published and approved api specifications with its generated unique identifier.
+- **API specification registry**: The `Sinetiq API Specification Registry` holds approved and published API specifications and maps them to a unique and immutable identifier
 
 - **CLI tool**: The `api-specification-registry-cli` is used to publish approved API specifications to the API specification reqistry.
 
@@ -34,10 +31,9 @@ The environment for this demonstration is managed through a client computer and 
 - **Service Explorer**: List and view approved API specifications, published within the API specification registry, together with active provider API instances, published within the service registry. The `Sinetiq Service Explorer` is a VSCode extension that helps you find service instances, their specifications and verify the implementaition while developing.
 
 <p>&nbsp;</p>
-<div style="text-align:center">
-<img align="center" src="./dosc/media/../../docs/media/api-governance-processes.png" width="600">
-</div>
-  
+
+![image](/docs/media/api-governance-processes.png)
+
 <p>&nbsp;</p>
 
 ### Installation Guide
@@ -47,7 +43,7 @@ This will start the registry components, `API specification registry` and `Servi
 
 1. Fetch the demonstration github repository.   
     ```sh
-    git clone git@github.com:Sinetiq/api-specification-governance.git
+    git clone git@github.com:sinetiq/api-specification-governance.git
     ```
 
 2. Change directory to the root git folder where the docker-compose.yml can be found, run the docker command.
@@ -57,26 +53,8 @@ This will start the registry components, `API specification registry` and `Servi
     docker-compose up
     ```
 
-_You can stop your registry services with CTRL-C._
-
 #### Service explorer
-Download and configure Visual Studio Code as your demonstration editor. Install the SINETIQ Service Explorer plugin. Follow the readme at the visual studio code marketplace [https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explore](https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explore).
-
-#### CLI tool: Manual run (not devops pipeline)
-
-1. Download CLI tool component from [https://www.npmjs.com/package/@sinetiq/api-specification-registry-cli](https://www.npmjs.com/package/@sinetiq/api-specification-registry-cli). Configure the CLI for your GIT repository containing API specifications (YAML files).
-   
-```sh
-npm i @sinetiq/api-specification-registry-cli
-```
-
-#### CLI tool: Automation, devops (CI/CD) pipeline
-
-1. Use `pipeline example` matching your environment.
-
-2. Create the API specification and version control it in your git-repo, attached to your created pipeline.
-
-3. Create a Pull Request/Merge Request, review, approve and merge the API specification, initiate the pipeline.
+Download and configure Visual Studio Code as your demonstration editor. Install the SINETIQ Service Explorer plugin. Follow the readme at the visual studio code marketplace [https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explorer](https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explorer).
 
 
 _Your demonstration environment is now ready._
@@ -90,12 +68,7 @@ _Your demonstration environment is now ready._
    Open a webbroser, use url http://localhost:8500/ to verify up-n-running.
 
 3. Verify Service Explorer.  
-   Open Visual Code, verify the `Service Explroer` accroding to user manual.
-
-4. Verify CLI-installed.
-   ```sh
-   npm -v @sinetiq/api-specification-registry-cli
-   ```
+   Open Visual Code, verify the `Service Explroer` according to user manual.
 
 <p>&nbsp;</p>
 
@@ -103,9 +76,7 @@ _Your demonstration environment is now ready._
 
 The steps 1 to 5 will show how to run this demonstration and successfully mange `governance of API specifications` in the complete life cycle chain.
 
-<div style="text-align:center">
-<img align="center" src="./dosc/media/../../docs/media/api-governance-processes-steps.png" width="600">
-</div>
+![image](/docs/media/api-governance-processes-steps.png)
 <p>&nbsp;</p>
 
 ### Step 1: Create API Specification
@@ -134,23 +105,19 @@ Use your preferred editor to create a YAML file for the API specification and st
 
 ### Step 2: Publish API Specification
 Utilize the approval CLI Tool to publish your API specification to the API specification repository. _Alternative: Use example pipelines matching your environment_.
-For test and deemonstration purpose use the command line call publish the specification.
+For test and demonstration purpose use the command line call publish the specification.
 
   ```sh
-  npx @sinetiq/api-specification-registry-cli --glob **/api-specification.json --ignore-already-registered --file api-spec.yml
+    npx @sinetiq/api-specification-registry-cli -r localhost:3333 -g com.example -a temperature-rest-json -v 1.0.0 --ignore-already-registered
   ```
 
 ### Verification
-Check the API specification registry UI to confirm the correct approval and deployment of your API specifications.
-
-1. Start a web browser
-2. Type in `api-registry-url:3333`
-3. Your spec is now published within the API specification registry.
+Go to the service registry at localhost:3333 and locate your API specification in the list of published specifications.
 
 ### Step 3: Application Development
 Develop applications, both providers and consumers, that comply with the API specification. Provider should publish endpoints with the unique API identifier, and consumers should discover and connect to providers using the identifier.
 
-1. Service Provider(s) publish the endpoint, for example serviceType `temperature-service-rest-json`.
+1. Service Provider(s) publish the endpoint, for example serviceType `com.example:temperature-rest-json:1.0.0`.
 
     ```sh
     ServiceData sd = new ServiceData();
@@ -163,21 +130,21 @@ Develop applications, both providers and consumers, that comply with the API spe
     sd.getProperties().put("path", basePath);
     consulAPI.registerService(sd);
     ```
-    _See complete Provider example code here._
+    _See complete Provider example code [here](./demo/sinetiq-core-application-temperature-provider/)._
 
 2. Service Consumer(s) discover the information source endpoint to be able to establish connection.
 
     ```sh
-    ServiceType serviceType = new ServiceType("temperature-sensor-rest-json");
+    ServiceType serviceType = new ServiceType("com.example:temperature-rest-json:1.0.0");
     List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
     System.out.println("Found " + apiInstances.size() + " instaces.");
     for(ServiceName sn : apiInstances) {
       System.out.println("Instance: " + sn.getName());
     }
     ```
-    _See complete Consumer example code here._
+    _See complete Consumer example code [here](./demo/sinetiq-core-application-temperature-consumer/)._
 
-### Step 4: Deploy
+### Step 4: Launch provider
 Launch your application components with their API implementation to operating instances. _The demostration Provider and Consumer can be found within the demo-folder._
 
   ```sh
