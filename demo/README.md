@@ -28,13 +28,23 @@ docker-compose -f compose-demo-standalone up temp-provider-1
 ### Scenario 2: Exploring the service registry using the vscode Service Explorer
 In this scenario, we connect to the producers running in the local cloud from vscode running on the host machine.
 1. Start the producers with the (compose-demo-extern.yml)[./compose-demo-extern.yml] instead:
-```bash
-docker-compose -f compose-demo-extern up --build
-```
-2. Configure the vscode Service Explorer to attach to the **Service Registry** using http://localhost:8500/v1
-3. Configure the vscode Service Explorer to attach to the **API Specification Registry** using http://localhost:3333/v1
-4. Explore the service registry inside the vscode Service Explorer!
-5. Remember to try to make some calls via the Service Explorer UI.
+    ```bash
+    docker-compose -f compose-demo-extern up --build
+    ```
+2. Register the temperature API with the **API Specification Registry**:
+   ```bash
+   npx @sinetiq/api-specification-registry-cli \
+      -g se.sinetiq.example \
+      -a service-type-discovery-rest-json \
+      -v 1.0.0 \
+      -r http://localhost:3333/ \
+      --open-api ./sinetiq-core-application-temperature-provider/src/main/resources/openapi.yaml
+
+   ```
+3. Configure the vscode Service Explorer to attach to the **Service Registry** using http://localhost:8500/v1
+4. Configure the vscode Service Explorer to attach to the **API Specification Registry** using http://localhost:3333/v1
+5. Explore the service registry inside the vscode Service Explorer!
+6. Remember to try to make some calls via the Service Explorer UI.
 
 # System overview
 The Docker Compose project in this folder starts up some infrastructure for the control plane:
