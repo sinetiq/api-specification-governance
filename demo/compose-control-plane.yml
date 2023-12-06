@@ -1,0 +1,43 @@
+version: "3.9"
+
+x-common-variables: &db-env
+  POSTGRES_USER: servicetypes
+  POSTGRES_PASSWORD: hunter2
+  POSTGRES_DB: servicetypes
+
+services:
+  service-registry:
+    container_name: consul
+    image: hashicorp/consul:latest
+    command: agent -server -ui -node=server1 -bootstrap-expect=1 -client 0.0.0.0
+#    network_mode: host
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+
+
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      <<: *db-env
+#    network_mode: host
+
+  api-specification-registry:
+    container_name: api-specification-registry
+    platform: linux/amd64
+    restart: always
+    image: sinetiq/api-specification-registry
+    environment:
+      <<: *db-env
+      SERVICE_REGISTRY_ADDRESS: http://service-registry:8500
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+#    network_mode: host
+    ports:
+      - "3333:3333"
+
+networks:
+  default:
+    name: sinetiq-local-cloud

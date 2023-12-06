@@ -1,31 +1,40 @@
 # Demo instructions
 ## Running the demo services
+For the demo scenarios, the Sinetiq Framework "control plane" with infrastructure services needs to be running:
 ```bash
-docker-compose up --build
+docker-compose -f compose-control-plane.yml up --build
 ```
 (Will take quite some time first time)
 
-For some event reporting in the docker logs, you can start a demo consumer:
+With the control plane active, time to set up some demo scenarios:
+### Scenario 1: Standalone ticker
+This scenario starts up two temperature producers and one temperature consumer.
+The consumer will report temperature readings to the logs.
 ```bash
-docker-compose up --build temp-consumer
+docker-compose -f compose-demo-standalone up --build
 ```
 (Same here, takes a while to build first time you run the command)
 
-## Observing late binding behaviour
-The consumer that can be started separately binds to providers as late as possible. By taking the providers down and up,
+_Observing late binding behaviour_
+
+The consumer binds to providers as late as possible. By taking the providers down and up,
 you can see the consumer switching between them by checking the log messages. It will always pick the first provider that is running.
 ```bash
-docker-compose down temp-provider-1
-docker-compose up temp-provider-1
+docker-compose -f compose-demo-standalone down temp-provider-1
+docker-compose -f compose-demo-standalone up temp-provider-1
 # ...etc
 ```
-## Gateway
-Optionally, you can attach the Sinetiq Gateway to the docker network to allow access to the Service Registry and
-its registered endpoints from an external network (such as the docker host machine)
-Contact Sinetiq for details on this setup.
 
-## Using the vscode Service Explorer
-(Currently not working)
+### Scenario 2: Exploring the service registry using the vscode Service Explorer
+In this scenario, we connect to the producers running in the local cloud from vscode running on the host machine.
+1. Start the producers with the (compose-demo-extern.yml)[./compose-demo-extern.yml] instead:
+```bash
+docker-compose -f compose-demo-extern up --build
+```
+2. Configure the vscode Service Explorer to attach to the **Service Registry** using http://localhost:8500/v1
+3. Configure the vscode Service Explorer to attach to the **API Specification Registry** using http://localhost:3333/v1
+4. Explore the service registry inside the vscode Service Explorer!
+5. Remember to try to make some calls via the Service Explorer UI.
 
 # System overview
 The Docker Compose project in this folder starts up some infrastructure for the control plane:
