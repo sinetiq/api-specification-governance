@@ -116,7 +116,6 @@ For test and demonstration purpose use the command line call publish the specifi
       -r http://localhost:3333/ \
       --ignore-already-registered \
       --open-api ./demo/temperature-api.yaml
-      -a temperature-rest-json -v 1.0.0 
   ```
 
 ### Verification
