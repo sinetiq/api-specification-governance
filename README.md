@@ -109,7 +109,14 @@ Utilize the approval CLI Tool to publish your API specification to the API speci
 For test and demonstration purpose use the command line call publish the specification.
 
   ```sh
-    npx @sinetiq/api-specification-registry-cli -r localhost:3333 -g com.example -a temperature-rest-json -v 1.0.0 --ignore-already-registered
+   npx @sinetiq/api-specification-registry-cli \
+      -g se.sinetiq.example \
+      -a temperature-sensor-rest-json \
+      -v 1.0.0 \
+      -r http://localhost:3333/ \
+      --ignore-already-registered \
+      --open-api ./demo/temperature-api.yaml
+      -a temperature-rest-json -v 1.0.0 
   ```
 
 ### Verification
@@ -160,7 +167,7 @@ Utilize Visual Studio Code and the Service Explorer to list, verify, and test th
   1. Explore API specifications within the `API specification registry`
   2. Explore the `API instance registry`
   3. Choose one API instance and test the provider API implementation
-     a. Send a request a examin the response
+     a. Send a request and examine the response
 
 <p>&nbsp;</p>
 
