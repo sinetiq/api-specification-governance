@@ -10,7 +10,10 @@ import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration;
 import com.orbitz.consul.model.health.Service;
 import com.orbitz.consul.option.QueryOptions;
+
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +33,20 @@ public class ConsulAPI {
 
     public ConsulAPI() { }
 
-    public void configure(String serverIP, String serverPort) throws MalformedURLException, ConsulException {
+    public void configure(String serverIP, String serverPort) throws ConsulException {
         if (serverIP.isEmpty() || serverPort.isEmpty()) {
             throw new IllegalArgumentException(String.format("serverIP: %s, serverPort: %s", serverIP, serverPort));
         }
 
         URL url = null;
-        if (serverPort.equalsIgnoreCase("443")) {
-            url = new URL("https://" + serverIP);
-        } else {
-            url = new URL("http://" + serverIP + ":" + serverPort);
+        try {
+            if (serverPort.equalsIgnoreCase("443")) {
+                url = new URI("https", serverIP, serverPort).toURL();
+            } else {
+                url = new URI("http", serverIP, serverPort).toURL();
+            }
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new RuntimeException("Error creating URL from configuration parameters", e);
         }
 
         LOG.log(Level.INFO, "Using service registry at " + url);
