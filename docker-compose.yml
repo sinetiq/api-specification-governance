@@ -50,7 +50,7 @@ services:
     container_name: register-api-specs
     image: node:21
     volumes:
-      - ./temperature-api.yaml:/specs/temperature-api.yaml
+      - ./demo/temperature-api.yaml:/specs/temperature-api.yaml
     entrypoint: |
       npx @sinetiq/api-specification-registry-cli \
             -g se.sinetiq.example \
