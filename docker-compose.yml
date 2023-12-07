@@ -45,6 +45,8 @@ services:
     build: demo/sinetiq-core-application-temperature-provider/
     ports:
       - "7401:8080"
+    profiles:
+      - manual_start
 
   register-api-specs:
     container_name: register-api-specs
