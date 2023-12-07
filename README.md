@@ -127,15 +127,16 @@ Develop applications, both providers and consumers, that comply with the API spe
 1. Service Provider(s) publish the endpoint, for example serviceType `com.example:temperature-rest-json:1.0.0`.
 
     ```sh
-    ServiceData sd = new ServiceData();
-    sd.setHost(host);
-    sd.setPort(port);
-    String serviceName = environment.getProperty("service.name");
-    String serviceType = environment.getProperty("service.type");
-    sd.setName(new ServiceName(serviceName, new ServiceType(serviceType)));
-    String basePath = environment.getProperty("service.basePath");
-    sd.getProperties().put("path", basePath);
-    consulAPI.registerService(sd);
+        ServiceData sd = new ServiceData();
+        sd.setHost(serviceProperties.getAdvertisedAddress());
+        sd.setPort(serviceProperties.getAdvertisedPort());
+        sd.setName(serviceProperties.getServiceName());
+        sd.getProperties().put("path", serviceProperties.getBasePath());
+        try {
+            consulAPI.registerService(sd);
+        } catch (NotRegisteredException e) {
+            // Handle error state
+        }
     ```
     _See complete Provider example code [here](./demo/sinetiq-core-application-temperature-provider/)._
 
