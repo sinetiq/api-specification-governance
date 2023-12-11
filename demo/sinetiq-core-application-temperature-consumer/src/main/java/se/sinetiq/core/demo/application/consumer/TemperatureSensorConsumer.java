@@ -90,7 +90,7 @@ public class TemperatureSensorConsumer {
             //
             List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
 
-            if (apiInstances.size() > 0) {
+            if (!apiInstances.isEmpty()) {
                 System.out.printf("Discovered %d service instances:%n", apiInstances.size());
                 for (ServiceName sn : apiInstances) {
                     System.out.println("+ " + sn.getName());

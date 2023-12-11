@@ -38,7 +38,7 @@ public class ConsulAPI {
             throw new IllegalArgumentException(String.format("serverIP: %s, serverPort: %s", serverIP, serverPort));
         }
 
-        URL url = null;
+        URL url;
         try {
             if (serverPort.equalsIgnoreCase("443")) {
                 url = new URI("https", serverIP, serverPort).toURL();
@@ -46,7 +46,7 @@ public class ConsulAPI {
                 url = new URI("http", serverIP, serverPort).toURL();
             }
         } catch (URISyntaxException | MalformedURLException e) {
-            throw new RuntimeException("Error creating URL from configuration parameters", e);
+            throw new IllegalArgumentException("Error creating URL from configuration parameters", e);
         }
 
         LOG.log(Level.INFO, "Using service registry at " + url);
@@ -76,7 +76,7 @@ public class ConsulAPI {
 
     public List<ServiceName> getServiceInstances(ServiceType type) {
         LOG.log(Level.INFO, "Looking up " + type);
-        List<ServiceName> results = new ArrayList<ServiceName>();
+        List<ServiceName> results = new ArrayList<>();
         for (ServiceData data : getAllServices()) {
             LOG.log(Level.INFO, "Service " + data.getName().getName());
             ServiceName serviceName = data.getName();
@@ -93,8 +93,7 @@ public class ConsulAPI {
         for (ServiceData data : getAllServices()) {
           try {
             LOG.log(Level.INFO, "getServiceData: name = " + data.getName().getName() + " , sn = " + serviceName.getName());
-            ConsulResponse<FullService> serviceData = agentClient.getService(data.getName().getName(), QueryOptions.BLANK);                
-            if (serviceName.getName().equals(data.getName().getName())) {
+              if (serviceName.getName().equals(data.getName().getName())) {
                 return data;
             }
           } catch (Exception e) {
@@ -150,7 +149,7 @@ public class ConsulAPI {
     }
 
     private List<ServiceData> getAllServices() {
-        List<ServiceData> results = new ArrayList<ServiceData>();
+        List<ServiceData> results = new ArrayList<>();
         Map<String, Service> services = agentClient.getServices();
         for (Service service : services.values()) {
             LOG.log(Level.INFO, "Found service: " + service.getId());
@@ -167,8 +166,7 @@ public class ConsulAPI {
             } catch (TypeNotPresentException ex) {
                 LOG.log(Level.INFO, "TypeNotPresentException service: " + service.getId());
             } catch(Exception e) {
-                LOG.log(Level.INFO, "getAllServices service: " + service.getId());
-                e.printStackTrace();
+                LOG.log(Level.INFO, "getAllServices service: " + service.getId(), e);
             }
         }
         return results;

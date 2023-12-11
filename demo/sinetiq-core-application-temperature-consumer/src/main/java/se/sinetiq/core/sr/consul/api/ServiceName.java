@@ -1,14 +1,11 @@
 package se.sinetiq.core.sr.consul.api;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * A unique identifier for a service instance.
  */
 public class ServiceName {
-
-	private static final Charset NET_UNICODE = Charset.forName("UTF-8");
 
 	private final String name;
 	private final ServiceType type;
@@ -55,8 +52,7 @@ public class ServiceName {
 		String[] nameType = s.split("[.]");
 		String name = nameType[0];
 		ServiceType type = ServiceType.valueOf(nameType[1]);
-		String domain = "";
-		
+
 		return new ServiceName(name, type);
 	}
 
@@ -74,14 +70,11 @@ public class ServiceName {
 			return false;
 		}
 		final ServiceName other = (ServiceName) obj;
-		if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+		if (!Objects.equals(this.name, other.name)) {
 			return false;
 		}
-		if (this.type != other.type && (this.type == null || !this.type.equals(other.type))) {
-			return false;
-		}
-		return true;
-	}
+        return Objects.equals(this.type, other.type);
+    }
 
 	@Override
 	public int hashCode() {
