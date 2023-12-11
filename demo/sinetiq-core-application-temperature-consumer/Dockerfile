@@ -1,21 +1,20 @@
-FROM maven:3.3.9 AS builder
+# Build the JAR in the first stage
+FROM maven:3.9-amazoncorretto-21 AS builder
 
-# Make sure project dependencies are cached in a separate layer before building
+# Make sure project dependencies are cached in separate layers before building
 COPY pom.xml ./
 RUN mvn verify --fail-never
+RUN mvn dependency:resolve-plugins
+RUN mvn compile assembly:single
 # Build application
 COPY src src
 RUN mvn compile assembly:single
 
-WORKDIR application
-
-# Second stage to create a minimal and secure image
-FROM openjdk:11-jre-slim
-
-WORKDIR application
+# Set up the execution environment in the second stage
+FROM amazoncorretto:21
 
 # Copy the necessary files from the previous stage
-COPY --from=builder target/temperature-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar temperature-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
+COPY --from=builder target/temperature-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
 
 ENV CFG_SERVER_PORT=8081
 ENV CFG_SERVICE_NAME=se.sinetiq.example:temperature-sensor-rest-json:1.0.0
@@ -26,5 +25,4 @@ ENV CFG_SR_PORT=443
 EXPOSE ${CFG_SERVER_PORT}
 
 # The command to start the application
-ENTRYPOINT ["java", "-cp", "temperature-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar", \
-            "se.sinetiq.core.demo.application.consumer.TemperatureSensorConsumer" ]
+ENTRYPOINT ["java", "-jar", "app.jar"]
