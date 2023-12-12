@@ -37,7 +37,7 @@ services:
   temp-provider-1:
     container_name: temp-provider-1
     environment:
-      - SR_ADDRESS=service-registry
+      - SR_HOST=service-registry
       - SERVICE_ADVERTISED_ADDRESS=temp-provider-1
       - SERVICE_ADVERTISED_PORT=8080
       - SERVICE_NAME=TempProvider1
@@ -46,7 +46,7 @@ services:
   temp-provider-2:
     container_name: temp-provider-2
     environment:
-      - SR_ADDRESS=consul
+      - SR_HOST=service-registry
       - SERVER_ADDRESS=temp-provider-2
       - SERVICE_ADVERTISED_PORT=8080
       - SERVICE_NAME=TempProvider2
