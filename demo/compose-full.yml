@@ -9,11 +9,10 @@ services:
   service-registry:
     container_name: consul
     image: hashicorp/consul:latest
-    command: agent -server -ui -node=server1 -bootstrap-expect=1 -client 0.0.0.0
     ports:
       - "8500:8500"
       - "8600:8600/udp"
-
+    command: agent -server -ui -node=server1 -bootstrap-expect=1 -client=0.0.0.0
 
   db:
     container_name: postgres
@@ -27,13 +26,13 @@ services:
     platform: linux/amd64
     restart: always
     image: sinetiq/api-specification-registry
+    ports:
+      - "3333:3333"
     environment:
       <<: *db-env
       SERVICE_REGISTRY_ADDRESS: http://service-registry:8500
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
-    ports:
-      - "3333:3333"
 
   temp-provider-1:
     container_name: temp-provider-1
@@ -42,23 +41,30 @@ services:
       - SERVICE_ADVERTISED_ADDRESS=http://localhost:7401/
       - SERVICE_ADVERTISED_PORT=7401
       - SERVICE_NAME=TempProvider1
-    build: demo/sinetiq-core-application-temperature-provider/
+    build: sinetiq-core-application-temperature-provider/
     ports:
       - "7401:8080"
-    profiles:
-      - manual_start
 
-  register-api-specs:
-    container_name: register-api-specs
-    image: node:21
-    volumes:
-      - ./demo/temperature-api.yaml:/specs/temperature-api.yaml
-    entrypoint: |
-      npx @sinetiq/api-specification-registry-cli \
-            -g se.sinetiq.example \
-            -a service-type-discovery-rest-json \
-            -v 1.0.0 \
-            -r http://localhost:3333/ \
-            --open-api /specs/temperature-api.yaml
+  temp-provider-2:
+    container_name: temp-provider-2
+    environment:
+      - SR_HOST=service-registry
+      - SERVICE_ADVERTISED_ADDRESS=http://localhost:7402/
+      - SERVICE_ADVERTISED_PORT=7402
+      - SERVICE_NAME=TempProvider2
+    build: sinetiq-core-application-temperature-provider/
+    ports:
+      - "7402:8080"
+
+  temp-consumer:
+    container_name: temp-consumer
+    environment:
+      - CFG_SR_HOST=service-registry
+      - CFG_SR_PORT=8500
+    build: sinetiq-core-application-temperature-consumer/
     profiles:
-      - manual_start
+      - do_not_start # won't work with container networks...
+
+networks:
+  default:
+    name: sinetiq-local-cloud
