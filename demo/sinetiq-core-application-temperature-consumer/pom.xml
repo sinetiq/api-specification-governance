@@ -48,8 +48,11 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <!-- TODO: Update this location after merge of that other branch -->
-                            <inputSpec>${project.basedir}/../sinetiq-core-application-temperature-provider/src/main/resources/openapi.yaml</inputSpec>
+                            <!--
+                                In a real project, this spec would be fetched from a published source
+                                (API Specification Registry, maven artefact or similar)
+                            -->
+                            <inputSpec>${project.basedir}/src/main/resources/temperature-api.yaml</inputSpec>
                             <generatorName>java</generatorName>
                             <apiPackage>se.sinetiq.core.demo.api.client.api</apiPackage>
                             <modelPackage>se.sinetiq.core.demo.api.client.model</modelPackage>
