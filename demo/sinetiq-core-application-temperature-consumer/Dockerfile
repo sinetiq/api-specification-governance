@@ -5,7 +5,6 @@ FROM maven:3.9-amazoncorretto-21 AS builder
 COPY pom.xml ./
 RUN mvn verify --fail-never
 RUN mvn dependency:resolve-plugins
-RUN mvn compile assembly:single
 # Build application
 COPY src src
 RUN mvn compile assembly:single
