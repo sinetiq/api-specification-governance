@@ -33,17 +33,17 @@ public class ConsulAPI {
 
     public ConsulAPI() { }
 
-    public void configure(String serverIP, String serverPort) throws ConsulException {
-        if (serverIP.isEmpty() || serverPort.isEmpty()) {
+    public void configure(String serverIP, int serverPort) throws ConsulException {
+        if (serverIP.isEmpty()) {
             throw new IllegalArgumentException(String.format("serverIP: %s, serverPort: %s", serverIP, serverPort));
         }
 
         URL url;
         try {
-            if (serverPort.equalsIgnoreCase("443")) {
-                url = new URI("https", serverIP, serverPort).toURL();
+            if (serverPort == 443) {
+                url = new URI("https", null, serverIP, serverPort, null, null, null).toURL();
             } else {
-                url = new URI("http", serverIP, serverPort).toURL();
+                url = new URI("http", null, serverIP, serverPort, null, null, null).toURL();
             }
         } catch (URISyntaxException | MalformedURLException e) {
             throw new IllegalArgumentException("Error creating URL from configuration parameters", e);

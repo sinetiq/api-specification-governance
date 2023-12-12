@@ -26,7 +26,7 @@ public class TemperatureSensorConsumer {
         String port = System.getenv("CFG_SR_PORT");
         ConsulAPI consulAPI = new ConsulAPI();
         try {
-            consulAPI.configure(host, port);
+            consulAPI.configure(host, Integer.parseInt(port));
         } catch (Throwable t) {
             System.out.println("Service registry configuration failure!");
             t.printStackTrace();
