@@ -18,7 +18,7 @@ docker-compose -f compose-demo-standalone.yml up --build
 _Observing late binding behaviour_
 
 The consumer binds to providers as late as possible. By taking the providers down and up,
-you can see the consumer switching between them by checking the log messages. It will always pick the first provider that is running.
+you can see the consumer switching between them by checking the log messages. It will always pick the first provider that is registered.
 ```bash
 docker-compose -f compose-demo-standalone.yml down temp-provider-1
 docker-compose -f compose-demo-standalone.yml up temp-provider-1
