@@ -45,7 +45,7 @@ public class ServerInformation {
     private ConsulAPI getAPI() {
         ConsulAPI consulAPI = new ConsulAPI();
         try {
-            consulAPI.configure(serviceRegistryProperties.getHost(), serviceRegistryProperties.getPort() + ""); // TODO: Migrate to int
+            consulAPI.configure(serviceRegistryProperties.getHost(), serviceRegistryProperties.getPort());
             return consulAPI;
         } catch (Throwable t) {
             throw new IllegalStateException("Service registry configuration failure!", t);
