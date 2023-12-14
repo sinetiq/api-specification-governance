@@ -109,7 +109,13 @@ Utilize the approval CLI Tool to publish your API specification to the API speci
 For test and demonstration purpose use the command line call publish the specification.
 
   ```sh
-    npx @sinetiq/api-specification-registry-cli -r localhost:3333 -g com.example -a temperature-rest-json -v 1.0.0 --ignore-already-registered
+   npx @sinetiq/api-specification-registry-cli \
+      -g se.sinetiq.example \
+      -a temperature-sensor-rest-json \
+      -v 1.0.0 \
+      -r http://localhost:3333/ \
+      --ignore-already-registered \
+      --open-api ./demo/temperature-api.yaml
   ```
 
 ### Verification
@@ -121,15 +127,16 @@ Develop applications, both providers and consumers, that comply with the API spe
 1. Service Provider(s) publish the endpoint, for example serviceType `com.example:temperature-rest-json:1.0.0`.
 
     ```sh
-    ServiceData sd = new ServiceData();
-    sd.setHost(host);
-    sd.setPort(port);
-    String serviceName = environment.getProperty("service.name");
-    String serviceType = environment.getProperty("service.type");
-    sd.setName(new ServiceName(serviceName, new ServiceType(serviceType)));
-    String basePath = environment.getProperty("service.basePath");
-    sd.getProperties().put("path", basePath);
-    consulAPI.registerService(sd);
+        ServiceData sd = new ServiceData();
+        sd.setHost(serviceProperties.getAdvertisedAddress());
+        sd.setPort(serviceProperties.getAdvertisedPort());
+        sd.setName(serviceProperties.getServiceName());
+        sd.getProperties().put("path", serviceProperties.getBasePath());
+        try {
+            consulAPI.registerService(sd);
+        } catch (NotRegisteredException e) {
+            // Handle error state
+        }
     ```
     _See complete Provider example code [here](./demo/sinetiq-core-application-temperature-provider/)._
 
@@ -160,7 +167,7 @@ Utilize Visual Studio Code and the Service Explorer to list, verify, and test th
   1. Explore API specifications within the `API specification registry`
   2. Explore the `API instance registry`
   3. Choose one API instance and test the provider API implementation
-     a. Send a request a examin the response
+     a. Send a request and examine the response
 
 <p>&nbsp;</p>
 
