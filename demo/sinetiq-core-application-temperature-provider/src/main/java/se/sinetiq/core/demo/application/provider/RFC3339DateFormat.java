@@ -2,6 +2,7 @@ package se.sinetiq.core.demo.application.provider;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
+import java.io.Serial;
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
@@ -10,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class RFC3339DateFormat extends DateFormat {
+  @Serial
   private static final long serialVersionUID = 1L;
   private static final TimeZone TIMEZONE_Z = TimeZone.getTimeZone("UTC");
 
@@ -33,6 +35,6 @@ public class RFC3339DateFormat extends DateFormat {
 
   @Override
   public Object clone() {
-    return this;
+    return super.clone();
   }
 }
