@@ -47,7 +47,7 @@ public class TemperatureSensorConsumer {
                         OffsetDateTime.now().minusSeconds(10),
                         OffsetDateTime.now());
                 System.out.printf("Response from %s (%s):%n", sd.getName().getName(), sd.getName().getType());
-                System.out.printf("  Current temperature: %s", formatReading(result));
+                System.out.printf("  Current temperature: %s%n", formatReading(result));
                 System.out.printf("  History (Last 10s):%n");
                 Optional.ofNullable(history.getReadings()).orElse(Collections.emptyList()).forEach(
                         reading -> System.out.printf("    %s%n", formatReading(reading))
