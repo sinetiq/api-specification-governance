@@ -21,7 +21,7 @@ public class TemperatureApiController implements TemperatureApi {
 
     @Override
     public ResponseEntity<TemperatureData> temperatureGet() {
-        BigDecimal temp = new BigDecimal(Math.random() * 2.0 + 10.0);
+        BigDecimal temp = BigDecimal.valueOf(Math.random() * 2.0 + 10.0);
         TemperatureData data = new TemperatureData()
                 .unit("C")
                 .machineID("Thermometer 1")
