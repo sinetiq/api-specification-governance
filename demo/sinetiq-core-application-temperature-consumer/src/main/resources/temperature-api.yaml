@@ -51,20 +51,20 @@ paths:
       summary: Get historical temperature data
       x-accepts: application/json
       parameters:
-        - description: Start date/time for the historical data
-          in: query
-          name: start_date
-          required: true
-          schema:
-            format: date-time
-            type: string
-        - description: End date/time for the historical data
-          in: query
-          name: end_date
-          required: true
-          schema:
-            format: date-time
-            type: string
+      - description: Start date/time for the historical data
+        in: query
+        name: start_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+      - description: End date/time for the historical data
+        in: query
+        name: end_date
+        required: true
+        schema:
+          format: date-time
+          type: string
       responses:
         '200':
           description: Historical temperature data

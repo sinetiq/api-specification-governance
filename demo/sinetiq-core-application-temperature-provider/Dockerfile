@@ -1,4 +1,4 @@
-FROM maven:3.3.9 AS builder
+FROM maven:3.9-amazoncorretto-21 AS builder
 
 # Make sure project dependencies are cached in a separate layer before building
 COPY pom.xml ./
@@ -10,7 +10,7 @@ RUN mvn -DskipTests=true package
 WORKDIR application
 
 # Second stage to create a minimal and secure image
-FROM openjdk:11-jre-slim
+FROM amazoncorretto:21
 
 WORKDIR application
 

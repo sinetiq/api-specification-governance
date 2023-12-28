@@ -26,7 +26,7 @@ public class TemperatureSensorConsumer {
         String port = System.getenv("CFG_SR_PORT");
         ConsulAPI consulAPI = new ConsulAPI();
         try {
-            consulAPI.configure(host, port);
+            consulAPI.configure(host, Integer.parseInt(port));
         } catch (Throwable t) {
             System.out.println("Service registry configuration failure!");
             t.printStackTrace();
@@ -47,7 +47,7 @@ public class TemperatureSensorConsumer {
                         OffsetDateTime.now().minusSeconds(10),
                         OffsetDateTime.now());
                 System.out.printf("Response from %s (%s):%n", sd.getName().getName(), sd.getName().getType());
-                System.out.printf("  Current temperature: %s", formatReading(result));
+                System.out.printf("  Current temperature: %s%n", formatReading(result));
                 System.out.printf("  History (Last 10s):%n");
                 Optional.ofNullable(history.getReadings()).orElse(Collections.emptyList()).forEach(
                         reading -> System.out.printf("    %s%n", formatReading(reading))
@@ -90,7 +90,7 @@ public class TemperatureSensorConsumer {
             //
             List<ServiceName> apiInstances = consulAPI.getServiceInstances(serviceType);
 
-            if (apiInstances.size() > 0) {
+            if (!apiInstances.isEmpty()) {
                 System.out.printf("Discovered %d service instances:%n", apiInstances.size());
                 for (ServiceName sn : apiInstances) {
                     System.out.println("+ " + sn.getName());

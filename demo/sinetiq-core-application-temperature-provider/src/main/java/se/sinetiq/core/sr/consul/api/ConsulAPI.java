@@ -10,7 +10,10 @@ import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration;
 import com.orbitz.consul.model.health.Service;
 import com.orbitz.consul.option.QueryOptions;
+
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +33,20 @@ public class ConsulAPI {
 
     public ConsulAPI() { }
 
-    public void configure(String serverIP, String serverPort) throws MalformedURLException, ConsulException {
-        if (serverIP.isEmpty() || serverPort.isEmpty()) {
+    public void configure(String serverIP, int serverPort) throws ConsulException {
+        if (serverIP.isEmpty()) {
             throw new IllegalArgumentException(String.format("serverIP: %s, serverPort: %s", serverIP, serverPort));
         }
 
-        URL url = null;
-        if (serverPort.equalsIgnoreCase("443")) {
-            url = new URL("https://" + serverIP);
-        } else {
-            url = new URL("http://" + serverIP + ":" + serverPort);
+        URL url;
+        try {
+            if (serverPort == 443) {
+                url = new URI("https", null, serverIP, serverPort, null, null, null).toURL();
+            } else {
+                url = new URI("http", null, serverIP, serverPort, null, null, null).toURL();
+            }
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new IllegalArgumentException("Error creating URL from configuration parameters", e);
         }
 
         LOG.log(Level.INFO, "Using service registry at " + url);
@@ -68,7 +75,8 @@ public class ConsulAPI {
 
 
     public List<ServiceName> getServiceInstances(ServiceType type) {
-        List<ServiceName> results = new ArrayList<ServiceName>();
+        LOG.log(Level.INFO, "Looking up " + type);
+        List<ServiceName> results = new ArrayList<>();
         for (ServiceData data : getAllServices()) {
             LOG.log(Level.INFO, "Service " + data.getName().getName());
             ServiceName serviceName = data.getName();
@@ -83,10 +91,9 @@ public class ConsulAPI {
 
     public ServiceData getServiceData(ServiceName serviceName) {
         for (ServiceData data : getAllServices()) {
-          try {        
+          try {
             LOG.log(Level.INFO, "getServiceData: name = " + data.getName().getName() + " , sn = " + serviceName.getName());
-            ConsulResponse<FullService> serviceData = agentClient.getService(data.getName().getName(), QueryOptions.BLANK);                
-            if (serviceName.getName().equals(data.getName().getName())) {
+              if (serviceName.getName().equals(data.getName().getName())) {
                 return data;
             }
           } catch (Exception e) {
@@ -142,7 +149,7 @@ public class ConsulAPI {
     }
 
     private List<ServiceData> getAllServices() {
-        List<ServiceData> results = new ArrayList<ServiceData>();
+        List<ServiceData> results = new ArrayList<>();
         Map<String, Service> services = agentClient.getServices();
         for (Service service : services.values()) {
             LOG.log(Level.INFO, "Found service: " + service.getId());
@@ -151,7 +158,7 @@ public class ConsulAPI {
                 serviceData.setHost(service.getAddress());                
                 serviceData.setPort(service.getPort());
                 LOG.log(Level.INFO, "getAllServices: serviceData.setName(ServiceName.valueOf [service.getId()] = " + service.getId() + " , type = " + service.getService());
-                serviceData.setName(ServiceName.valueOf(service.getId() + "." + service.getService()));
+                serviceData.setName(new ServiceName(service.getId(), new ServiceType(service.getService())));
                 serviceData.getProperties().putAll(service.getMeta());
                 LOG.log(Level.INFO, "SERVICE DATA : " + serviceData.toString());
                 // service.getTags(); // TODO: use this?
@@ -159,8 +166,7 @@ public class ConsulAPI {
             } catch (TypeNotPresentException ex) {
                 LOG.log(Level.INFO, "TypeNotPresentException service: " + service.getId());
             } catch(Exception e) {
-                LOG.log(Level.INFO, "getAllServices service: " + service.getId());
-                e.printStackTrace();
+                LOG.log(Level.INFO, "getAllServices service: " + service.getId(), e);
             }
         }
         return results;

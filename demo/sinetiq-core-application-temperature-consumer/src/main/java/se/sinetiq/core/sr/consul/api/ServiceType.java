@@ -1,9 +1,6 @@
 package se.sinetiq.core.sr.consul.api;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * Identifiers for service types.
@@ -14,7 +11,7 @@ public class ServiceType {
 
 	/**
 	 * Create a new ServiceType.
-	 * @param type the service type (eg. "_http").
+	 * @param type the service type (e.g. "_http").
 	 */
 	public ServiceType(String type) {
 		this.type = type;
@@ -35,13 +32,7 @@ public class ServiceType {
 	 */
 	@Override
 	public String toString() {
-		/*StringBuilder sb = new StringBuilder();
-		sb.append(type).append('.');
-		for (String subtype : subtypes) {
-			sb.append(',').append(subtype);
-		}
-		return sb.toString();*/
-		return type;
+        return type;
 	}
 
 	/**
@@ -64,11 +55,8 @@ public class ServiceType {
 			return false;
 		}
 		final ServiceType other = (ServiceType) obj;
-		if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
-			return false;
-		}
-		return true;
-	}
+        return Objects.equals(this.type, other.type);
+    }
 
 	@Override
 	public int hashCode() {
