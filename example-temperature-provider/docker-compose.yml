@@ -5,21 +5,25 @@ services:
     container_name: temp-provider-1
     environment:
       - SR_HOST=service-registry
-      - SERVICE_ADVERTISED_ADDRESS=http://temp-provider-1:8080/
+      - SERVICE_ADVERTISED_ADDRESS=http://localhost:8080
       - SERVICE_ADVERTISED_PORT=8080
       - SERVICE_NAME=TempProvider1
     build: .
+    ports:
+      - 8080:8080
 
   temp-provider-2:
     container_name: temp-provider-2
     environment:
       - SR_HOST=service-registry
-      - SERVICE_ADVERTISED_ADDRESS=http://temp-provider-2:8080/
-      - SERVICE_ADVERTISED_PORT=8080
+      - SERVICE_ADVERTISED_ADDRESS=http://localhost:8081
+      - SERVICE_ADVERTISED_PORT=8081
       - SERVICE_NAME=TempProvider2
     build: .
+    ports:
+      - 8081:8080
 
 networks:
   default:
     name: sinetiq-local-cloud
-    external: true # Start compose-controle-plane first
+    external: true

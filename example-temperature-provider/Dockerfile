@@ -2,6 +2,7 @@ FROM maven:3.9-amazoncorretto-21 AS builder
 
 # Make sure project dependencies are cached in a separate layer before building
 COPY pom.xml ./
+COPY temperature-api.yaml ./
 RUN mvn verify --fail-never
 # Build application
 COPY src src

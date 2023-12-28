@@ -86,7 +86,7 @@
                         </goals>
                         <configuration>
                             <inputSpec>
-                                ${project.basedir}/../temperature-api.yaml
+                                ${project.basedir}temperature-api.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>se.sinetiq.example.application.provider.api</apiPackage>
