@@ -15,6 +15,22 @@ This section will give an in-depth explanation of components used, the `demonstr
 
 The demonstration showcase also ships with hands-on code `examples` and components, to run, inspect & modify.
 
+### Prerequisites
+
+Before proceeding, ensure that you have the following installed on your local machine:
+
+## Docker & Docker Compose
+
+- Docker: Docker is necessary for containerizing your application and its dependencies. You can download and install Docker from here.
+- Docker Compose: Docker Compose is used to define and run multi-container Docker applications. It allows you to manage services such as databases or back-end systems in a single file. Docker Compose is bundled with Docker Desktop, but you can confirm the installation by running:
+`docker-compose -- version`
+
+## Node.js
+Node.js: Ensure you have Node.js installed, as it will be required for running JavaScript on the server side. You can download Node.js from here.
+Verify the installation by running:
+`node --version`
+`npx --version`
+
 ### Demonstration Setup
 
 The environment for this demonstration is managed through a client computer and components listed below.
@@ -55,7 +71,9 @@ This will start the registry components, `API specification registry` and `Servi
 
 Download and configure Visual Studio Code as your demonstration editor. Install the SINETIQ Service Explorer plugin. Follow the readme at the visual studio code marketplace [https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explorer](https://marketplace.visualstudio.com/items?itemName=Sinetiq.service-explorer).
 
-Note: Modify the configuration of the `Service Explorer` to use your local registries.
+Note: Modify the configuration of the `Service Explorer` to use your local registries.  The default URLs for the local registies are:
+- Base URL of Sinetiq API Specification Registry: `[http://localhost:3333](http://localhost:3333/v1/)`
+- Base URL of HashiCorp Consul instance: `[http://localhost:8500](http://localhost:8500/)`
 
 _Your demonstration environment is now ready._
 
